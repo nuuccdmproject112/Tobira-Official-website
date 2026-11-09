@@ -1,0 +1,71 @@
+{
+  "id": "g11",
+  "groupNumber": 11,
+  "title": "Grip and Dive Down：以爬岩鰍為原型之仿生裝置研究初探",
+  "category": "論文組",
+  "themeColor": "#597879",
+  "doorBgColor": "#597879",
+  "hasCover": true,
+  "summary": "以爬岩鰍的自然附著結構為靈感，探索仿生設計於吸附式用品的創新應用，將自然機制轉化為兼具穩定性、實用性與創新價值的產品概念。",
+  "members": [
+    "江偉宸"
+  ],
+  "advisor": "李筑軒",
+  "cover": "Grip_and_Dive_Down_主視覺.jpg",
+  "door": "Grip_and_Dive_Down_門卡.jpg",
+  "poster": "Grip_and_Dive_Down_海報.jpg",
+  "team": "Grip_and_Dive_Down_團隊_A.webp",
+  "teamFront": "Grip_and_Dive_Down_團隊_A.webp",
+  "teamBack": "Grip_and_Dive_Down_團隊_B.webp",
+  "advisorPhoto": "",
+  "sections": [
+    {
+      "title": "設計理念與痛點",
+      "text": "本研究以擅長在湍急溪流中穩定附著的爬岩鰍為靈感，將自然界的附著方式轉化為日常用品的設計概念，探索如何改善傳統吸盤容易鬆脫、黏膠可能留下殘留物，以及產品在不同環境下不易穩定附著等問題。"
+    },
+    {
+      "title": "目標使用者與情境",
+      "text": "設計概念適用於重視便利性與空間彈性的使用者，例如租屋族、居家生活者、運動愛好者，以及需要臨時固定設備的展覽工作者。\n從浴室收納、運動生理訊號感測，到展示設備的固定，嘗試將仿生附著應用於不同生活情境。"
+    },
+    {
+      "title": "核心功能與特色",
+      "text": "本研究著重於爬岩鰍腹部的附著結構，將貼合表面、微細紋理、摩擦力與穩定附著等概念融入設計。\n目前提出三種產品構想：GripPatch 仿生感測貼片、GripHook 仿生浴室掛架，以及 StreamLock 仿生電視壁掛系統，展現自然機制應用於不同產品的可能性。"
+    },
+    {
+      "title": "使用技術與工具",
+      "text": "文獻蒐集與分析：了解爬岩鰍的身體構造及附著特性，再將生物特徵轉化為產品設計原則。\n仿生設計方法：將生物特徵系統化轉化為工程設計準則。\nAI 輔助概念圖生成：用於快速視覺化不同產品概念的外觀與應用方向。\n材料與結構構想分析：協助呈現三款仿生產品的結構可行性。"
+    },
+    {
+      "title": "目前成果",
+      "text": "目前已完成爬岩鰍附著特性的文獻整理、相關吸附產品的類型分析，以及三款仿生產品概念的發展：GripPatch、GripHook、StreamLock。\n這些成果主要用於展示仿生設計的思考過程與應用潛力，現階段仍屬於概念設計，尚未完成實際性能與安全性驗證。"
+    }
+  ],
+  "gallery": [
+    {
+      "src": "Grip_and_Dive_Down_成果展示_01.png",
+      "alt": "Grip and Dive Down：以爬岩鰍為原型之仿生裝置研究初探 成果展示 1",
+      "caption": ""
+    },
+    {
+      "src": "Grip_and_Dive_Down_成果展示_02.png",
+      "alt": "Grip and Dive Down：以爬岩鰍為原型之仿生裝置研究初探 成果展示 2",
+      "caption": ""
+    },
+    {
+      "src": "Grip_and_Dive_Down_成果展示_03.png",
+      "alt": "Grip and Dive Down：以爬岩鰍為原型之仿生裝置研究初探 成果展示 3",
+      "caption": ""
+    },
+    {
+      "src": "Grip_and_Dive_Down_成果展示_04.png",
+      "alt": "Grip and Dive Down：以爬岩鰍為原型之仿生裝置研究初探 成果展示 4",
+      "caption": ""
+    }
+  ],
+  "video": {
+    "url": "",
+    "title": ""
+  },
+  "demoUrl": "",
+  "links": []
+}

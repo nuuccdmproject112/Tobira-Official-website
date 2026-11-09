@@ -1,0 +1,39 @@
+{
+  "department": "國立聯合大學文化創意與數位行銷學系",
+  "exhibition": {
+    "date": "2026.11.22（日）— 2026.12.18（五）",
+    "venue": "苗栗火車頭園區 · M.文物故事館（聯大館）",
+    "address": "開幕典禮｜2026.11.22（日）15:00",
+    "transport": "開放時間｜每週六、日 09:00–17:00。展期末日為週五，請依週末開放時間安排參觀；異動請見展覽 Instagram。",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=苗栗火車頭園區"
+  },
+  "faculty": [
+    {
+      "name": "指導教授待確認",
+      "role": "職稱待填",
+      "message": "策展指導心得待填",
+      "photo": "content/shared/faculty-01.jpg"
+    }
+  ],
+  "committee": [
+    {
+      "role": "總幹事組",
+      "members": "名單待填"
+    },
+    {
+      "role": "視覺／網頁／場設／公關",
+      "members": "各工作小組名單待填"
+    }
+  ],
+  "credits": "112 級畢業專題展《扉》｜讓世界相遇。",
+  "links": [
+    {
+      "label": "展覽 Instagram",
+      "url": "https://www.instagram.com/nuuccdm_tobira.112/"
+    },
+    {
+      "label": "文化創意與數位行銷學系",
+      "url": "https://ccdm.nuu.edu.tw/"
+    }
+  ]
+}

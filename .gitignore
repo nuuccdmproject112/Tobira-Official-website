@@ -1,0 +1,34 @@
+# ==========================================
+# GitHub / Git Ignore Rules for Exhibition
+# ==========================================
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python Cache & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+
+# Backup & Temporary Files
+*.bak*
+*.tmp
+backups/
+backup_*/
+
+# Large Raw Source Assets (Already normalized to WebP in prototype/content)
+專題團體貼文照/
+沒有整理的圖片們/
+*.xlsx
