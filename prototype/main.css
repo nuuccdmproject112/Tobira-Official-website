@@ -1,0 +1,2150 @@
+/* ==========================================================================
+   國立聯合大學 文化創意與數位行銷學系 112 級畢業專題展《扉》
+   官方展覽網站 核心主樣式表 (Unified Main Stylesheet)
+   ==========================================================================
+   本檔案整合原先分散的 style.css、upgrade.css、official.css 與 refinement.css，
+   依據介面結構進行模組化分區，並附帶詳細中文備註說明。
+   
+   【目錄導覽】
+   - 區塊 01：全域變數、基礎重設與襯線字型定義 (Variables & Reset)
+   - 區塊 02：全站底層天空藍鎖定與主視覺全景 (Backdrop Architecture & Blue Sky Lock)
+   - 區塊 03：主視覺天光與海浪微動態系統 (Ambient Waves & Breathing Light)
+   - 區塊 04：開場動畫系統 (Opening Overlay & Reveal Animation)
+   - 區塊 05：頁首導覽列與官方識別標誌 (Header & Official Brand)
+   - 區塊 06：首頁大圖區與沉浸式進入按鈕 (Hero Section & Enter Exhibition)
+   - 區塊 07：隨機門扉探索輪播區 (Door Carousel, 3D Swiper & Controls)
+   - 區塊 08：作品展區滿版色彩氛圍與資訊面板 (Full-Bleed Atmosphere & Project Banner)
+   - 區塊 09：專題完整說明網格 (Project Description Sections)
+   - 區塊 10：成果展示相簿與照片放大燈箱 (Gallery Photowall & Lightbox Dialog)
+   - 區塊 11：團隊 3D 雙面翻轉畫框與漸層透明底色 (Team 3D Flip Card & Transparent Frame)
+   - 區塊 12：指導老師尊榮占位畫框與呼吸微光印鑑 (Advisor Frame & Glowing Seal)
+   - 區塊 13：下一扇門扉翻門按鈕 (Next Project Door Transition Button)
+   - 區塊 14：展務團隊、系所介紹、展覽交通資訊與頁尾 (Visiting Info, Faculty & Footer)
+   - 區塊 15：行動裝置與平板響應式全斷點適配 (Responsive Layout for Mobile & Tablet)
+   ========================================================================== */
+
+
+/* ==========================================================================
+   【區塊 01】全域變數、基礎重設與襯線字型定義 (Variables & Reset)
+   ========================================================================== */
+
+:root {
+  /* 官方展覽主視覺標準色系 */
+  --accent: #619ab4;          /* 預設天藍代表色 (由各組 themeColor 動態覆蓋) */
+  --accent-rgb: 97, 154, 180; /* 代表色之 RGB 數值，用於半透明與覆蓋層計算 */
+  --card-bg: #619ab4;         /* 門卡背面與底色 */
+  --ink: #213650;             /* 深墨藍文字主色 */
+  --paper: #f6f6eb;           /* 典雅溫潤米白底色 */
+  
+  /* 襯線字型堆疊（標準宋體/楷體優先，維持文藝典雅氣質） */
+  --font-serif: "Noto Serif TC", "Source Han Serif TC", "Songti TC", "STSong", "MingLiU", "DFKai-SB", serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", "PingFang TC", sans-serif;
+}
+
+/* 盒模型全域重設 */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  background-color: #7ab7e4 !important; /* 確保全域底色永久鎖定為官方開幕藍色 */
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 點擊反饋與按鈕/連結基礎 */
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 5px;
+}
+
+button {
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: transparent;
+}
+
+button:focus-visible, a:focus-visible {
+  outline: 3px solid #324ac2;
+  outline-offset: 5px;
+}
+
+/* 標題襯線字體強制規範 */
+h1, h2, h3, h4,
+.project-title-main,
+.door strong,
+.section-head h2,
+.project-heading h2,
+.project-team h3,
+#venue h3,
+#faculty h3,
+.hero h1 {
+  font-family: var(--font-serif) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* 頁面切換淡入動畫（限於 main 內容頁） */
+[hidden] {
+  display: none !important;
+}
+
+main > [data-page]:not([hidden]) {
+  animation: page-enter 0.35s ease both;
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+
+/* ==========================================================================
+   【區塊 02】全站底層天空藍鎖定與主視覺全景 (Backdrop Architecture & Blue Sky Lock)
+   --------------------------------------------------------------------------
+   【核心備註】
+   1. 背景藍色 (#7ab7e4)：貫穿全站與開場動畫的核心底色，任何過渡均不可設為透明。
+   2. 滿版氛圍覆蓋層 (.exhibition-backdrop::after)：全螢幕 100vw × 100vh 覆蓋，
+      依選中的門卡代表色以 22% 半透明柔和過渡，既展現各組色彩氛圍，又保留主視覺可見性。
+   ========================================================================== */
+
+body, body[data-page] {
+  animation: none !important;
+  transform: none !important;
+  background-color: #7ab7e4 !important;
+}
+
+.exhibition-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  overflow: hidden !important;
+  background-color: #7ab7e4 !important;
+}
+
+/* 滿版標準色半透明氛圍覆蓋層 (隨各組代表色平滑過渡) */
+.exhibition-backdrop::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: rgba(var(--accent-rgb, 97, 154, 180), 0.22) !important;
+  transition: background-color 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* 官方主視覺 SVG 場景向量圖 (電腦版/手機版響應式切換) */
+.official-scene {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+}
+
+.scene-desktop {
+  display: block !important;
+}
+.scene-mobile {
+  display: none !important;
+}
+
+/* 電腦版海浪下半部無縫封底延展 */
+.scene-desktop .sea-continuation {
+  fill: #b4c5e5 !important;
+}
+
+
+/* ==========================================================================
+   【區塊 03】主視覺天光與海浪微動態系統 (Ambient Waves & Breathing Light)
+   ========================================================================== */
+
+/* 1. 天光微動態：柔和明度與彩度交替呼吸光澤 */
+#home [data-name="天光"] {
+  transform-box: fill-box;
+  transform-origin: 94% 0;
+}
+
+#home:not(.intro-running) [data-name="天光"] {
+  animation: light-breathe-glow 7s ease-in-out infinite alternate !important;
+}
+
+@keyframes light-breathe-glow {
+  0% {
+    opacity: 0.82;
+    transform: rotate(-1deg);
+    filter: brightness(0.96) saturate(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(0.8deg);
+    filter: brightness(1.16) saturate(1.22) drop-shadow(0 0 18px rgba(255, 255, 255, 0.45));
+  }
+  100% {
+    opacity: 0.86;
+    transform: rotate(-0.65deg);
+    filter: brightness(1.02) saturate(1.05);
+  }
+}
+
+/* 2. 海波浪微動態：輕柔起伏搖盪 */
+#home [data-name="海波浪"] {
+  animation: sea-sway-ambient 6.5s ease-in-out infinite alternate !important;
+}
+
+@keyframes sea-sway-ambient {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  50%  { transform: translate(-11px, 9px) rotate(-0.28deg); }
+  100% { transform: translate(16px, -13px) rotate(0.32deg); }
+}
+
+#home [data-name="海波浪"] path:nth-child(1) {
+  animation: sea-foam-ambient 4.5s ease-in-out infinite alternate !important;
+}
+
+@keyframes sea-foam-ambient {
+  0%   { opacity: 0.75; transform: translateY(0); }
+  50%  { opacity: 0.95; transform: translateY(-2px); }
+  100% { opacity: 0.8;  transform: translateY(1.5px); }
+}
+
+/* 門片以右側為軸，鑰匙固定在天光範圍內。 */
+#home:not(.intro-running) [data-name="門框上層"] {
+  transform-box: fill-box;
+  transform-origin: 100% 0;
+  animation: door-leaf-idle 5.2s ease-in-out infinite;
+}
+
+@keyframes door-leaf-idle {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(.95); }
+}
+
+#home:not(.intro-running) [data-name="鑰匙影子"] {
+  animation: key-idle 5.8s ease-in-out infinite;
+}
+
+@keyframes key-idle {
+  0%, 100% { opacity: .28; }
+  45%, 65% { opacity: 1; }
+}
+
+/* 3. 道路光影流動 */
+#home:not(.intro-running) [data-name="路上層色"] {
+  animation: road-ambient 8s ease-in-out infinite alternate !important;
+}
+@keyframes road-ambient {
+  0%   { filter: brightness(1); }
+  100% { filter: brightness(1.06) saturate(1.05); }
+}
+
+
+/* ==========================================================================
+   【區塊 04】開場動畫系統 (Opening Overlay & Reveal Animation)
+   ========================================================================== */
+
+#opening {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #79b9d8;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  pointer-events: none;
+  color: #f4ed69;
+}
+
+#opening.play {
+  display: flex;
+  animation: opening 2s both;
+}
+
+#opening span {
+  font-family: var(--font-serif);
+  font-size: 180px;
+  animation: form 1.5s both;
+}
+
+#opening p {
+  letter-spacing: 12px;
+}
+
+@keyframes opening {
+  0%, 75% { opacity: 1; }
+  100%    { opacity: 0; visibility: hidden; }
+}
+
+@keyframes form {
+  from { transform: translateY(35px) rotate(-10deg); filter: blur(12px); opacity: 0; }
+  to   { transform: none; filter: none; opacity: 1; }
+}
+
+/* ---- 首頁場景架構（開場與靜態首頁共用的錨定排版）---- */
+
+/* 開場蓋板：refinement 覆蓋 — 新架構中 #opening 由 JS 控制，CSS 預設收起 */
+#opening, #opening.play, #opening.demo-play {
+  display: none !important;
+  animation: none !important;
+}
+
+/* #home 整體佈局鎖定 */
+#home {
+  animation: none !important;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+#home .scene-art {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  transform: none !important;
+  animation: none !important;
+  translate: none !important;
+  z-index: -1;
+}
+
+#home .official-scene {
+  pointer-events: none;
+  user-select: none;
+  animation: none !important;
+}
+
+#home .official-logo {
+  aspect-ratio: 478 / 402;
+  object-fit: contain;
+}
+
+#home .hero-index {
+  pointer-events: none;
+}
+
+/* ---- 開場進行中（intro-running）SVG 圖層動畫 ---- */
+
+/* 天光 → 道路 → 門圖騰 → 雲。各段各自緩入緩出。 */
+#home.intro-running [data-name="天光"] {
+  animation: light-fall 3s ease-in-out both !important;
+}
+
+#home.intro-running [data-name="路上層色"],
+#home.intro-running [data-name="路下層色"] {
+  animation: road-reveal 3s 1.6s ease-in-out both !important;
+}
+
+#home.intro-running [data-layer="未知的門圖騰01"] {
+  animation: scene-fade-in 1.7s 3.8s ease-in-out both;
+}
+
+#home.intro-running [data-layer="未知的門圖騰01"] + [data-layer="未知的門圖騰01"] {
+  animation-delay: 4.4s;
+}
+
+#home [data-name="雲"] {
+  animation: opening-cloud-drift 9s ease-in-out infinite alternate;
+}
+
+#home.intro-running [data-layer="雲"] {
+  animation: scene-fade-in 2.15s 5.05s ease-in-out both;
+}
+
+#home.intro-running .hero-bottom {
+  animation: home-copy-in 7.2s ease-in-out both;
+}
+
+#home.intro-running [data-name="鑰匙影子"] {
+  animation: key-in-light 1.8s 1.5s ease-in-out both !important;
+}
+
+@keyframes road-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes light-fall {
+  from {
+    opacity: 0;
+    transform: rotate(-1deg) scaleY(.05);
+    filter: brightness(.96) saturate(.92);
+  }
+  to {
+    opacity: .82;
+    transform: rotate(-1deg) scaleY(1);
+    filter: brightness(.96) saturate(.92);
+  }
+}
+
+@keyframes scene-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes opening-cloud-drift {
+  from { translate: 0 0; }
+  to   { translate: 20px -6px; }
+}
+
+@keyframes home-copy-in {
+  0%, 25% { opacity: .3; }
+  100% { opacity: 1; }
+}
+
+@keyframes key-in-light {
+  from { opacity: 0; }
+  to   { opacity: .28; }
+}
+
+/* ---- 官方場景圖層：雙構圖精確錨定（首頁 & 展覽背板共用）---- */
+
+#home .scene-art {
+  inset: 0 !important;
+  width: 100%;
+  height: 100% !important;
+  overflow: hidden;
+  background: none;
+}
+
+#home .scene-art .official-scene,
+.exhibition-backdrop .official-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  transform: none !important;
+  translate: none !important;
+}
+
+#home .placed-layer {
+  pointer-events: none;
+}
+
+
+/* ==========================================================================
+   【區塊 05】頁首導覽列與官方識別標誌 (Header & Official Brand)
+   ========================================================================== */
+
+header {
+  height: 76px;
+  padding: 0 5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f6f6ebef;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #21365022;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* 首頁無頂部導覽列，推門進入展區後優雅浮現 */
+body[data-page="home"] header {
+  display: none !important;
+}
+
+body:not([data-page="home"]) header {
+  display: flex !important;
+  animation: header-fade-in 0.4s ease both;
+}
+
+@keyframes header-fade-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 28px;
+  font-family: var(--font-serif);
+}
+
+.brand img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #24435b20;
+}
+
+.brand small {
+  font-size: 11px;
+  margin-left: 12px;
+  letter-spacing: 2px;
+  font-family: var(--font-sans);
+}
+
+nav {
+  display: flex;
+  gap: 25px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+nav a {
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+nav a[aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 7px;
+  font-weight: 700;
+}
+
+
+/* ==========================================================================
+   【區塊 06】首頁大圖區與沉浸式進入按鈕 (Hero Section & Enter Exhibition)
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh !important;
+  background: #7ab7e4 !important;
+  padding: 45px 8vw 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 3px;
+  line-height: 2.2;
+  position: relative;
+  z-index: 2;
+  max-width: 420px;
+}
+
+.hero h1 {
+  font-size: clamp(80px, 14vw, 210px);
+  line-height: 1;
+  margin: 30px 0 40px;
+  color: #f5ed65;
+  position: relative;
+  z-index: 2;
+}
+
+/* 標準字 SVG 圖片：限制寬度，不受 h1 字號影響 */
+.hero h1 .official-logo,
+#home h1 .official-logo,
+h1 .official-logo {
+  width: 220px !important;
+  max-width: 55vw !important;
+  height: auto !important;
+  font-size: initial !important;
+  display: block;
+}
+
+.hero h1 span {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  letter-spacing: 10px;
+  margin-top: 18px;
+  color: #213650;
+}
+
+.hero-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+  z-index: 2;
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+/* 進入展覽黃色主題按鈕 */
+.enter-exhibition {
+  position: relative;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 45px;
+  margin-top: 22px;
+  padding: 18px 32px;
+  border: 1px solid #213650;
+  background: #f5ed65;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 700;
+  box-shadow: 6px 6px 0 #21365020;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.enter-exhibition:hover {
+  background: #fff5a4;
+  transform: translateX(4px);
+  box-shadow: 8px 8px 0 #21365030;
+}
+
+/* 重播開場動畫按鈕 */
+.hero .replay-opening {
+  display: block;
+  margin: 18px 0 0;
+  width: max-content;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: #213650;
+  opacity: 0.75;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: opacity 0.2s;
+}
+
+.hero .replay-opening:hover {
+  opacity: 1;
+}
+
+/* 首頁 scene-art：SVG 背景藍色圖層設為透明（以 body 底色取代，避免藍上藍疊色） */
+.hero [data-name="背景藍色"],
+#opening [data-name="背景藍色"] {
+  fill: transparent;
+}
+
+/* 首頁滾動指引底欄 — 隱藏 EXHIBITION ARCHIVE 文字 */
+.hero-index {
+  display: none !important;
+}
+
+/* 首頁 scene-art 位置精確錨定（電腦版） */
+.hero .scene-art {
+  position: absolute;
+  left: 36%;
+  right: -2%;
+  top: 0;
+  bottom: 0;
+  background: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* ==========================================================================
+   【區塊 07】隨機門扉探索輪播區 (Door Carousel, 3D Swiper & Controls)
+   ========================================================================== */
+
+#portfolio {
+  position: relative !important;
+  background: transparent !important;
+  min-height: calc(100svh - 76px);
+  padding: 60px 0 100px;
+}
+
+.section-head {
+  text-align: center;
+  margin: 0 auto 30px;
+  max-width: 900px;
+}
+
+.section-head > p:first-child {
+  font-size: 11px;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+
+.section-head h2 {
+  font-size: clamp(28px, 4vw, 42px);
+  margin: 10px 0 16px;
+}
+
+/* 隨機排序說明小標與 Hover 驚嘆號提示 */
+.section-sub {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  font-size: 12px !important;
+  margin: 0 0 2px !important;
+  color: #4b6077 !important;
+}
+
+.random-order-tip {
+  display: inline-flex !important;
+  align-items: center !important;
+  position: relative !important;
+  cursor: pointer !important;
+}
+
+.tip-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 15px !important;
+  height: 15px !important;
+  border-radius: 50% !important;
+  background: #507191 !important;
+  color: #ffffff !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  margin-left: 4px !important;
+  transition: transform 0.2s ease, background-color 0.2s ease !important;
+}
+
+.random-order-tip:hover .tip-icon {
+  background: #254263 !important;
+  transform: scale(1.15) !important;
+}
+
+.tip-popover {
+  position: absolute !important;
+  bottom: calc(100% + 8px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(4px) !important;
+  background: #1e334a !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  line-height: 1.6 !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  width: max-content !important;
+  max-width: 250px !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity 0.25s ease, transform 0.25s ease !important;
+  z-index: 20 !important;
+}
+
+.tip-popover::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  border: 5px solid transparent !important;
+  border-top-color: #1e334a !important;
+}
+
+.random-order-tip:hover .tip-popover,
+.random-order-tip:focus-visible .tip-popover {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(-50%) translateY(0) !important;
+}
+
+/* 門扉 Swiper 舞台 */
+.door-stage {
+  width: 100%;
+  overflow: hidden;
+  padding: 24px 0 35px;
+  touch-action: pan-y;
+}
+
+#counter {
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: #213650;
+  font-weight: 600;
+}
+
+.doors.swiper-wrapper {
+  padding: 0 !important;
+  overflow: visible !important;
+  gap: 0;
+  align-items: flex-start;
+}
+
+#portfolio {
+  --door-card-width: 260px;
+}
+
+.door.swiper-slide {
+  width: var(--door-card-width) !important;
+  max-width: 80vw !important;
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: opacity 0.4s, transform 0.4s;
+  padding: 0;
+  text-align: left;
+}
+
+.door.swiper-slide.active,
+.door.swiper-slide.swiper-slide-active {
+  opacity: 1 !important;
+  transform: translateY(-8px) scale(1.04) !important;
+}
+
+/* 門卡外框質感 */
+.door-frame {
+  width: 100% !important;
+  aspect-ratio: 3 / 4 !important;
+  position: relative !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 10px 15px 0 #253b5515, 0 20px 30px #20334c20 !important;
+  border: 6px solid #e9e7d6 !important;
+}
+
+.door.swiper-slide.active .door-frame {
+  border-color: #ede86b !important;
+}
+
+.door-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.door strong {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.6;
+  min-height: 48px;
+  font-size: 17px;
+  margin-top: 14px;
+}
+
+/* 門扉下方點擊提示文字 */
+.door-hint {
+  text-align: center !important;
+  font-size: 9.5px !important;
+  letter-spacing: 2px !important;
+  color: #657685 !important;
+  margin: 2px 0 10px !important;
+}
+
+/* 主視覺缺漏佔位卡牌 */
+.door-missing {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  color: #f6f6eb !important;
+  padding: 16px !important;
+  text-align: center !important;
+  user-select: none !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.door-missing-tag {
+  font-size: 11px !important;
+  letter-spacing: 2px !important;
+  padding: 3px 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+  border-radius: 20px !important;
+  background: rgba(0, 0, 0, 0.25) !important;
+  font-weight: 500 !important;
+}
+
+.door-missing-badge {
+  font-size: 26px !important;
+  font-family: var(--font-serif) !important;
+  font-weight: 700 !important;
+  letter-spacing: 6px !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+  padding: 2px 0 !important;
+}
+
+.door-missing-sub {
+  font-size: 11px !important;
+  opacity: 0.85 !important;
+  letter-spacing: 1px !important;
+}
+
+/* 左右切換按鈕控制列 */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin-top: 15px;
+}
+
+.controls button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #21365040;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  transition: all 0.25s ease;
+}
+
+.controls button:hover {
+  background: #213650;
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+
+/* ==========================================================================
+   【區塊 08】作品展區滿版色彩氛圍與資訊面板 (Full-Bleed Atmosphere & Project Banner)
+   ========================================================================== */
+
+article#project {
+  max-width: 1180px !important;
+  margin: 50px auto 0 !important;
+  padding: 0 32px 35px 32px !important;
+  background: #f7f6f0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 16px 40px rgba(20, 36, 56, 0.12) !important;
+  border: 1px solid #21365015 !important;
+}
+
+/* 標題與簡介色帶橫幅 (電腦版左右雙欄) */
+.project-banner-bar {
+  margin: 0 -32px 36px -32px !important;
+  padding: 44px 44px 38px 44px !important;
+  background-color: var(--accent, #619ab4) !important;
+  color: #ffffff !important;
+  border-radius: 16px 16px 0 0 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  transition: background-color 0.5s ease !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 48px !important;
+  align-items: center !important;
+}
+
+.project-meta-col {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.project-meta-col .tag {
+  align-self: flex-start !important;
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(4px) !important;
+  font-size: 11px !important;
+  letter-spacing: 2px !important;
+  padding: 4px 14px !important;
+  border-radius: 4px !important;
+  margin-bottom: 16px !important;
+}
+
+.project-title-main {
+  font-size: clamp(28px, 3.2vw, 42px) !important;
+  line-height: 1.3 !important;
+  color: #ffffff !important;
+  margin: 0 0 10px 0 !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.18) !important;
+}
+
+.project-title-sub {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+  color: rgba(255, 255, 255, 0.88) !important;
+  margin: 0 0 20px 0 !important;
+}
+
+.project-summary-box {
+  font-size: 14.5px !important;
+  line-height: 1.8 !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  margin: 0 !important;
+}
+
+/* 內頁主視覺依原圖比例呈現，橫圖可使用整個欄位。 */
+.project-banner-bar.without-visual {
+  grid-template-columns: 1fr !important;
+}
+
+.project-visual-col {
+  width: min(100%, 560px);
+  justify-self: center;
+}
+
+.cover-preview-card {
+  display: grid;
+  place-items: center;
+}
+
+.project-visual-col .cover-preview-card img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: min(58svh, 510px);
+  object-fit: contain;
+}
+
+.door-frame:has(img[src*="說蜜密"]),
+.cover-preview-card:has(img[src*="說蜜密"]) {
+  background: #fff !important;
+  padding: 10px;
+}
+
+/* ==========================================================================
+   【區塊 09】專題完整說明網格 (Project Description Sections)
+   ========================================================================== */
+
+.sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px 60px;
+  margin: 45px 0;
+}
+
+.sections section {
+  border-top: 1px solid #21365025;
+  padding-top: 18px;
+}
+
+.sections h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #213650;
+  margin: 0 0 10px 0;
+}
+
+.sections p {
+  line-height: 1.9;
+  font-size: 14px;
+  color: #374b61;
+  white-space: pre-line;
+  margin: 0;
+}
+
+.sections section:last-child {
+  grid-column: 1 / -1;
+}
+
+/* 外鏈與體驗連結按鈕群 */
+.links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 30px 0 20px;
+}
+
+.links a {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border: 1px solid #21365040;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.links a:hover {
+  background: #213650;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* 專題海報收合區 */
+details {
+  margin: 25px 0 40px;
+  border: 1px solid #21365020;
+  border-radius: 8px;
+  padding: 16px 20px;
+  background: #ffffff;
+}
+
+details summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: #213650;
+}
+
+details img.cover {
+  width: 100%;
+  margin-top: 18px;
+  border-radius: 6px;
+}
+
+
+/* ==========================================================================
+   【區塊 10】成果展示相簿與照片放大燈箱 (Gallery Photowall & Lightbox Dialog)
+   ========================================================================== */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 24px 20px;
+  align-items: start;
+  margin: 40px 0;
+}
+
+.gallery figure {
+  grid-column: span 2;
+  margin: 0;
+  background: #fffaf0;
+  padding: 9px 9px 12px;
+  box-shadow: 0 8px 24px #24345210;
+  border-radius: 4px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery figure:hover {
+  transform: scale(1.03) !important;
+  box-shadow: 0 16px 36px #24345220;
+  z-index: 2;
+}
+
+/* 錯落拍立得視角 */
+.gallery figure:nth-child(5n+1) { grid-column: span 3; transform: rotate(-1.3deg); }
+.gallery figure:nth-child(5n+2) { grid-column: span 3; transform: rotate(1.3deg); margin-top: 18px; }
+.gallery figure:nth-child(5n+4) { transform: rotate(-1deg); margin-top: 10px; }
+
+.gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  cursor: zoom-in;
+  border-radius: 2px;
+}
+
+.gallery figcaption {
+  font-size: 11.5px;
+  line-height: 1.6;
+  margin-top: 10px;
+  color: #4a5c6e;
+}
+
+.gallery figure figcaption:empty {
+  display: none !important;
+}
+
+/* 圖片檢視：先完整顯示，點圖片放大後可捲動查看細節。 */
+img[data-view-image] {
+  cursor: zoom-in;
+}
+
+img[data-view-image]:focus-visible {
+  outline: 2px solid #324ac2;
+  outline-offset: 3px;
+}
+
+html:has(#lightbox[open], #staff-profile[open]) {
+  overflow: hidden;
+}
+
+#lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+}
+
+#lightbox::backdrop {
+  background: #101b2beb;
+}
+
+.lightbox-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 52px 16px 22px;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.lightbox-image {
+  flex: none;
+  margin: auto;
+  padding: 0;
+  cursor: zoom-in;
+}
+
+.lightbox-image img {
+  display: block;
+  max-width: min(calc(100vw - 32px), 1440px);
+  max-height: calc(100dvh - 114px);
+  object-fit: contain;
+}
+
+#lightbox.is-zoomed .lightbox-image {
+  margin: auto;
+  cursor: zoom-out;
+}
+
+#lightbox.is-zoomed img {
+  width: var(--zoom-width);
+  max-width: none;
+  max-height: none;
+}
+
+#lightbox p {
+  flex: none;
+  align-self: center;
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: .875rem;
+}
+
+#close-modal {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: 30px;
+  line-height: 1;
+  border-radius: 50%;
+  background: #101b2baa;
+}
+
+#lightbox button:focus-visible {
+  outline-color: #f5ed65;
+  outline-offset: 1px;
+}
+
+/* ==========================================================================
+   【區塊 11】團隊 3D 雙面翻轉畫框與漸層透明底色 (Team 3D Flip Card & Transparent Frame)
+   --------------------------------------------------------------------------
+   【核心亮點】
+   1. 3D 翻面結構：點擊正面 A 自動旋轉 180° 切換為背面 B。
+   2. 漸層透明畫框底色：上半部透明透出背景，下半部過渡為實體飽和色托住人物。
+   3. 人物身高級歸一化：所有 24 張圖統一對齊 920px 基準身高，站姿比例完美一致。
+   ========================================================================== */
+
+.project-team {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  background: #f7f6f0 !important;
+  border-radius: 12px !important;
+  border: 1px solid #21365018 !important;
+  box-shadow: 0 10px 30px rgba(33, 54, 80, 0.05) !important;
+  padding: 40px 32px 48px 32px !important;
+  margin-top: 65px !important;
+  gap: 28px !important;
+  width: 100% !important;
+}
+
+.team-meta-header {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
+  max-width: 800px !important;
+}
+
+.team-meta-header .tag {
+  background: rgba(33, 54, 80, 0.08) !important;
+  color: #213650 !important;
+  border: 1px solid rgba(33, 54, 80, 0.15) !important;
+  font-size: 11px !important;
+  letter-spacing: 2px !important;
+  padding: 4px 14px !important;
+  border-radius: 4px !important;
+  margin-bottom: 12px !important;
+}
+
+.team-meta-header h3 {
+  font-size: clamp(24px, 2.5vw, 32px) !important;
+  color: #213650 !important;
+  margin: 0 0 12px 0 !important;
+}
+
+.team-members-list {
+  font-size: clamp(16px, 1.4vw, 19px) !important;
+  font-weight: 600 !important;
+  color: #2e4359 !important;
+  margin: 0 !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* 雙畫框展示舞台 (團隊照 + 指導老師) */
+.team-stage {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  gap: 32px !important;
+  width: 100% !important;
+  max-width: 960px !important;
+  margin: 12px auto 0 !important;
+  perspective: 1200px !important;
+}
+
+/* 翻面卡片外框容器 */
+.team-card-flipper {
+  position: relative !important;
+  flex: 1 1 440px !important;
+  max-width: 500px !important;
+  min-height: 450px !important;
+  cursor: pointer !important;
+  outline: none !important;
+  border-radius: 16px !important;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease !important;
+  user-select: none !important;
+}
+
+.team-card-flipper:hover {
+  transform: translateY(-8px) scale(1.015) !important;
+}
+
+.team-card-flipper:focus-visible {
+  box-shadow: 0 0 0 4px #7ab7e4, 0 20px 35px rgba(33, 54, 80, 0.22) !important;
+}
+
+/* 翻轉核心 3D 容器 */
+.team-card-inner {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 450px !important;
+  border-radius: 16px !important;
+  transform-style: preserve-3d !important;
+  transition: transform 0.75s cubic-bezier(0.34, 1.25, 0.64, 1) !important;
+  box-shadow: 0 16px 36px rgba(25, 45, 75, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+.team-card-flipper.is-flipped .team-card-inner {
+  transform: rotateY(180deg) !important;
+}
+
+.team-card-face {
+  background: #1b2f48;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 16px !important;
+}
+
+.team-card-back {
+  transform: rotateY(180deg) !important;
+}
+
+/* 典雅藝術畫框（雙重框線、內陰影、四角金屬角花） */
+.artistic-frame-border {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 3px solid rgba(255, 255, 255, 0.88) !important;
+  border-radius: 12px !important;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3), inset 0 0 24px rgba(0, 0, 0, 0.15) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  overflow: hidden !important;
+}
+
+/* 畫框四角金屬裝飾角花 */
+.frame-corner {
+  position: absolute !important;
+  width: 14px !important;
+  height: 14px !important;
+  border: 2px solid rgba(255, 255, 255, 0.95) !important;
+  pointer-events: none !important;
+  z-index: 4 !important;
+}
+.frame-corner.tl { top: 6px !important; left: 6px !important; border-right: none !important; border-bottom: none !important; }
+.frame-corner.tr { top: 6px !important; right: 6px !important; border-left: none !important; border-bottom: none !important; }
+.frame-corner.bl { bottom: 6px !important; left: 6px !important; border-right: none !important; border-top: none !important; }
+.frame-corner.br { bottom: 6px !important; right: 6px !important; border-left: none !important; border-top: none !important; }
+
+/* 去背圖片放置盒 */
+.frame-image-box {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  padding: 12px 10px 0 10px !important;
+}
+
+/* 人物身高統一鎖定 95% 高度對齊，自帶立體真實落地陰影 */
+.cutout-img {
+  height: 95% !important;
+  max-height: 95% !important;
+  width: auto !important;
+  max-width: 94% !important;
+  object-fit: contain !important;
+  object-position: bottom center !important;
+  filter: drop-shadow(0 14px 22px rgba(18, 30, 50, 0.38)) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)) !important;
+  transition: transform 0.4s ease !important;
+  pointer-events: none !important;
+}
+
+.team-card-flipper:hover .cutout-img {
+  transform: scale(1.03) !important;
+}
+
+/* 翻面操作懸浮徽章 */
+.flip-hint-badge {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  z-index: 5 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  background: rgba(22, 38, 62, 0.72) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.5px !important;
+  padding: 4px 11px !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.38) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  transition: background 0.3s ease, transform 0.3s ease !important;
+}
+
+.team-card-flipper:hover .flip-hint-badge {
+  background: rgba(22, 38, 62, 0.92) !important;
+  transform: scale(1.05) !important;
+}
+
+.card-caption {
+  text-align: center !important;
+  margin-top: 14px !important;
+}
+.card-caption .card-title {
+  display: block !important;
+  font-family: var(--font-serif) !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #213650 !important;
+  letter-spacing: 2px !important;
+}
+.card-caption .card-sub {
+  display: block !important;
+  font-size: 10px !important;
+  color: #708095 !important;
+  letter-spacing: 1.5px !important;
+  margin-top: 2px !important;
+}
+
+
+/* ==========================================================================
+   【區塊 12】指導老師尊榮占位畫框與呼吸微光印鑑 (Advisor Frame & Glowing Seal)
+   ========================================================================== */
+
+.advisor-card-flipper {
+  flex: 0 1 340px !important;
+  max-width: 380px !important;
+}
+
+.advisor-card-front .artistic-frame-border,
+.advisor-card-back .artistic-frame-border {
+  border-color: rgba(230, 200, 135, 0.88) !important;
+  box-shadow: inset 0 0 0 2px rgba(230, 200, 135, 0.32), inset 0 0 25px rgba(0, 0, 0, 0.25) !important;
+}
+.advisor-card-front .frame-corner,
+.advisor-card-back .frame-corner {
+  border-color: rgba(230, 200, 135, 0.95) !important;
+}
+
+.advisor-placeholder-art {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 30px 20px !important;
+  color: #f7f5ee !important;
+}
+
+/* 老師金色印鑑徽章 (自帶柔和呼吸光芒) */
+.advisor-seal {
+  width: 78px !important;
+  height: 78px !important;
+  border-radius: 50% !important;
+  border: 2px dashed rgba(230, 200, 135, 0.65) !important;
+  background: #1b2f48 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-bottom: 22px !important;
+  box-shadow: 0 0 24px rgba(230, 200, 135, 0.25) !important;
+  animation: sealPulse 4s ease-in-out infinite alternate !important;
+}
+
+@keyframes sealPulse {
+  0%   { transform: scale(0.96); box-shadow: 0 0 14px rgba(230, 200, 135, 0.18); }
+  100% { transform: scale(1.04); box-shadow: 0 0 28px rgba(230, 200, 135, 0.4); }
+}
+
+.advisor-seal .seal-icon {
+  width: 32px !important;
+  height: 32px !important;
+  stroke: #e6c887 !important;
+}
+.advisor-seal .seal-text {
+  font-size: 8px !important;
+  letter-spacing: 2px !important;
+  color: #e6c887 !important;
+  font-weight: 700 !important;
+  margin-top: 2px !important;
+}
+
+.advisor-role-badge {
+  display: inline-block !important;
+  font-size: 11px !important;
+  letter-spacing: 3px !important;
+  color: #e6c887 !important;
+  background: rgba(230, 200, 135, 0.14) !important;
+  border: 1px solid rgba(230, 200, 135, 0.4) !important;
+  border-radius: 20px !important;
+  padding: 3px 14px !important;
+  margin-bottom: 12px !important;
+}
+
+.advisor-name {
+  font-family: var(--font-serif) !important;
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  letter-spacing: 3px !important;
+  margin: 0 0 10px 0 !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.advisor-await-text {
+  font-size: 11px !important;
+  letter-spacing: 2px !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* 老師卡片背面：勉勵金句 */
+.advisor-quote-box {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 32px 24px !important;
+  text-align: center !important;
+}
+.quote-content {
+  color: #f7f5ee !important;
+}
+.quote-mark {
+  display: block !important;
+  font-family: var(--font-serif) !important;
+  font-size: 46px !important;
+  line-height: 1 !important;
+  color: #e6c887 !important;
+  opacity: 0.65 !important;
+}
+.quote-text {
+  font-family: var(--font-serif) !important;
+  font-size: 14px !important;
+  line-height: 1.8 !important;
+  letter-spacing: 1.5px !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  margin: 10px 0 16px !important;
+}
+.quote-author {
+  display: block !important;
+  font-size: 12px !important;
+  letter-spacing: 2px !important;
+  color: #e6c887 !important;
+}
+
+
+/* ==========================================================================
+   【區塊 13】下一扇門扉翻門按鈕 (Next Project Door Transition Button)
+   ========================================================================== */
+
+.next-project {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  border: 0 !important;
+  background: #20354b !important;
+  color: #ffffff !important;
+  padding: 0 !important;
+  margin: 50px 0 10px 0 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  box-shadow: 0 12px 28px rgba(32, 53, 75, 0.2) !important;
+  perspective: 1000px !important;
+}
+
+.next-project-bg {
+  position: absolute !important;
+  inset: 0 !important;
+  background: #f4ed69 !important;
+  transform-origin: bottom right !important;
+  transform: rotate3d(1, 1, 0, 85deg) scale(0.6) !important;
+  transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+.next-project:hover .next-project-bg {
+  transform: rotate3d(0, 0, 0, 0deg) scale(1) !important;
+  opacity: 1 !important;
+}
+
+.next-project .next-project-content {
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 38px 42px !important;
+  font-family: var(--font-serif) !important;
+  font-weight: 700 !important;
+  font-size: clamp(22px, 2.2vw, 28px) !important;
+  letter-spacing: 0.08em !important;
+  color: #ffffff !important;
+  transition: color 0.4s ease !important;
+}
+
+.next-project:hover .next-project-content {
+  color: #20354b !important;
+}
+
+.next-project .arrow-icon {
+  font-size: 32px !important;
+  transition: transform 0.4s ease !important;
+  display: inline-block !important;
+}
+
+.next-project:hover .arrow-icon {
+  transform: translateX(12px) scale(1.15) !important;
+}
+
+
+/* ==========================================================================
+   【區塊 14】展務團隊、系所介紹、展覽交通資訊與頁尾 (Visiting Info, Faculty & Footer)
+   ========================================================================== */
+
+.shared {
+  position: relative;
+  padding: 75px max(25px, calc((100% - 1040px) / 2));
+  border-top: 1px solid #21365025;
+  background: #f7f6f0;
+}
+
+.shared h3 {
+  font-size: 22px;
+  margin-bottom: 25px;
+}
+
+.department-intro {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  align-items: center;
+  gap: 40px;
+  background: #243452;
+  color: #f5f4e9;
+  padding: 35px;
+  border-radius: 8px;
+  margin-bottom: 55px;
+}
+
+.department-intro img {
+  width: 100%;
+}
+
+.department-intro p {
+  font-size: 14px;
+  line-height: 2;
+  margin: 0;
+}
+
+#faculty {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+#faculty figure {
+  margin: 0;
+  max-width: 240px;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 4px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+#faculty img {
+  width: 100%;
+}
+
+.visit-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 35px;
+  align-items: center;
+}
+
+.visit-grid img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.visit-grid p {
+  line-height: 1.9;
+  font-size: 14.5px;
+}
+
+footer {
+  position: relative;
+  background: #213650;
+  color: #f6f6eb;
+  padding: 55px 8vw;
+  font-size: 12px;
+  line-height: 2.5;
+}
+
+footer strong {
+  font-family: var(--font-serif);
+  font-size: clamp(40px, 6vw, 65px);
+  font-weight: 400;
+  display: block;
+}
+
+footer a {
+  margin-right: 15px;
+  color: #f5ed65;
+}
+
+
+.footer-logo,
+.department-footer {
+  display: block;
+  width: min(100%, 235px);
+  height: auto;
+}
+
+.footer-logo {
+  width: 84px;
+  margin-bottom: 18px;
+}
+
+#external a {
+  display: inline-block;
+}
+
+/* 以同色底襯襯托去背人物，相框的邊緣交錯堆疊。 */
+.committee-frames {
+  --portrait-matte: #c1daea;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: start;
+  row-gap: 26px;
+  padding: 16px 14px 22px;
+  margin: 0;
+  list-style: none;
+  isolation: isolate;
+}
+
+.committee-card {
+  --tilt: -4deg;
+  position: relative;
+  min-width: 0;
+  width: calc(100% + 9px);
+  transform: translateY(var(--offset, 0px)) rotate(var(--tilt));
+}
+
+.committee-card:nth-child(even) {
+  --tilt: 4deg;
+  --offset: 9px;
+}
+
+.committee-card:nth-child(3n) {
+  --tilt: -1deg;
+  --offset: 4px;
+}
+
+.committee-card:last-child {
+  width: 100%;
+}
+
+.committee-card:is(:hover, :focus-within) {
+  z-index: 2;
+  transform: translateY(-4px) rotate(0);
+}
+
+.committee-frame {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 8px;
+  background: #fffaf0;
+  color: #213650;
+  box-shadow: 0 7px 16px #21365036;
+}
+
+.committee-portrait {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 5;
+  background-color: var(--portrait-matte);
+  overflow: hidden;
+  font-size: .8rem;
+}
+
+.committee-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.committee-label {
+  font-family: var(--font-serif);
+  display: grid;
+  gap: 4px;
+  text-align: center;
+  padding: 8px 0 3px;
+}
+
+.committee-label span {
+  font-size: .75rem;
+}
+
+/* 以去背人像、斜切色帶與分段進場組成角色卡。 */
+#staff-profile {
+  width: min(900px, calc(100% - 24px));
+  max-width: none;
+  max-height: calc(100dvh - 24px);
+  padding: 0;
+  border: 0;
+  background: #f4f2e8;
+  color: #1b2f48;
+  box-shadow: 0 24px 80px #0b182780;
+}
+
+#staff-profile::backdrop {
+  background: #101b2bba;
+}
+
+.staff-scene {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 420px;
+  display: grid;
+  align-items: center;
+  border: 1px solid #8ca0ae;
+  background-image: repeating-linear-gradient(90deg, transparent 0 63px, #1b2f480d 63px 64px);
+}
+
+.staff-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #bed8e5;
+  clip-path: polygon(0 54%, 100% 4%, 100% 47%, 0 97%);
+  animation: staff-band .55s cubic-bezier(.2,.7,.2,1) both;
+}
+
+.staff-scene::after {
+  content: "";
+  position: absolute;
+  inset: 15px;
+  z-index: -1;
+  border: 1px solid #1b2f4830;
+  pointer-events: none;
+}
+
+#staff-profile.has-portrait .staff-scene {
+  grid-template-columns: 1fr 1fr;
+}
+
+.staff-portrait {
+  display: none;
+}
+
+.has-portrait .staff-portrait {
+  display: grid;
+  height: clamp(300px, 58vh, 500px);
+  align-self: end;
+  align-items: end;
+  animation: staff-portrait-in .65s .08s cubic-bezier(.18,.8,.24,1) both;
+}
+
+.staff-portrait img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(10px 9px 0 #1b2f4820);
+}
+
+.staff-info {
+  padding: 45px clamp(26px, 5vw, 72px);
+  animation: staff-info-in .5s .19s ease-out both;
+}
+
+.staff-role {
+  display: inline-block;
+  margin: 0;
+  padding: 4px 10px;
+  background: #1b2f48;
+  color: #f4f2e8;
+  font-family: var(--font-serif);
+  font-size: .875rem;
+}
+
+#staff-name {
+  margin: 12px 0 18px;
+  font-size: clamp(2.6rem, 7vw, 5.2rem);
+  line-height: 1.1;
+}
+
+.staff-duty {
+  max-width: 29em;
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid #1b2f4860;
+  line-height: 1.85;
+}
+
+.staff-scene form {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+
+.staff-scene form button {
+  width: 44px;
+  height: 44px;
+  background: #f4f2e8;
+  font-size: 1.65rem;
+}
+
+@keyframes staff-band {
+  from { transform: translateX(-100%); }
+}
+
+@keyframes staff-portrait-in {
+  from { opacity: 0; transform: translate(-12%, 9%); clip-path: inset(0 65% 0 0); }
+  to { opacity: 1; transform: none; clip-path: inset(0); }
+}
+
+@keyframes staff-info-in {
+  from { opacity: 0; transform: translateX(22px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 650px) {
+  #staff-profile.has-portrait .staff-scene {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "details" "portrait";
+    grid-template-rows: auto 1fr;
+  }
+
+  .staff-scene { min-height: 280px; }
+  .staff-info { padding: 54px 27px 16px; }
+  .has-portrait .staff-info { grid-area: details; }
+
+  .has-portrait .staff-portrait {
+    grid-area: portrait;
+    height: clamp(160px, 36dvh, 300px);
+    min-width: 0;
+    margin-top: 4px;
+  }
+
+  .staff-portrait img {
+    display: block;
+    max-height: 100%;
+  }
+}
+
+@media (max-width: 820px) {
+  .committee-frames { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 500px) {
+  .committee-frames { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ==========================================================================
+   【區塊 15】行動裝置與平板響應式全斷點適配 (Responsive Layout for Mobile & Tablet)
+   ========================================================================== */
+
+/* 1. 中型平板與小筆電 (< 900px) */
+@media (max-width: 899px) {
+  article#project {
+    padding: 0 18px 25px 18px !important;
+  }
+  .project-banner-bar {
+    margin: 0 -18px 24px -18px !important;
+    padding: 28px 20px 24px 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 22px !important;
+  }
+  .project-title-main {
+    font-size: 26px !important;
+  }
+  .project-title-sub {
+    font-size: 12px !important;
+    margin-bottom: 14px !important;
+  }
+  .project-summary-box {
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+  }
+  .project-team {
+    padding: 28px 18px 36px 18px !important;
+    margin-top: 45px !important;
+    gap: 20px !important;
+  }
+  .next-project .next-project-content {
+    padding: 26px 24px !important;
+    font-size: 20px !important;
+  }
+  .next-project .arrow-icon {
+    font-size: 24px !important;
+  }
+}
+
+/* 2. 平板豎屏與大尺寸手機 (< 820px)：團隊畫框改為直向堆疊 */
+@media (max-width: 820px) {
+  .team-stage {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 32px !important;
+  }
+  .team-card-flipper,
+  .advisor-card-flipper {
+    width: 100% !important;
+    max-width: 380px !important;
+    min-height: 380px !important;
+  }
+  .team-card-inner {
+    min-height: 380px !important;
+  }
+}
+
+/* 3. 手機版直向全域適配 (< 700px) */
+@media (max-width: 700px) {
+  header {
+    height: 66px;
+    padding: 0 20px;
+  }
+  .brand small {
+    display: none;
+  }
+  nav {
+    gap: 14px;
+    font-size: 11.5px;
+  }
+  .hero {
+    padding: 24px 20px 30px;
+  }
+  .scene-desktop {
+    display: none !important;
+  }
+  .scene-mobile {
+    display: block !important;
+  }
+  .door-stage {
+    padding: 2px 0 8px !important;
+  }
+  #portfolio {
+    --door-card-width: 170px;
+  }
+  .door.swiper-slide.active {
+    transform: scale(1.06) !important;
+  }
+  .sections {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 12px;
+  }
+  .gallery figure {
+    grid-column: span 1 !important;
+    transform: none !important;
+    margin-top: 0 !important;
+  }
+  .gallery figure:nth-child(4n+1) {
+    grid-column: 1 / -1 !important;
+  }
+  .department-intro {
+    grid-template-columns: 1fr;
+    padding: 22px;
+  }
+  .visit-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 4. 減弱動畫無障礙支援 */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  #home:not(.intro-running) [data-name],
+  #home:not(.intro-running) [data-name] path {
+    animation: none !important;
+  }
+  #opening {
+    display: none !important;
+  }
+}

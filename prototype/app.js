@@ -54,32 +54,6 @@ function parseTitle(rawTitle) {
 }
 
 
-function getTeamPalette(themeColor) {
-  const hex = (themeColor || '#619ab4').replace('#', '');
-  const r = parseInt(hex.substring(0, 2), 16) || 97;
-  const g = parseInt(hex.substring(2, 4), 16) || 154;
-  const b = parseInt(hex.substring(4, 6), 16) || 180;
-  const isCool = b > r;
-
-  // 成員畫框背景：漸層透明（上半部是透明的，一路漸變到下面是實體顏色）
-  // 冷色系組別：正面實體底色為夕陽赤陶橙，背面實體底色為暖陽金黃
-  // 暖色系組別：正面實體底色為晴空湛藍，背面實體底色為青碧孔雀綠
-  const frontRgb = isCool ? [231, 111, 81] : [58, 134, 200];
-  const backRgb  = isCool ? [244, 162, 97] : [42, 157, 143];
-  const advisorRgb = [27, 47, 72]; // 皇家深靛藍
-
-  const [fr, fg, fb] = frontRgb;
-  const [br, bg, bb] = backRgb;
-  const [ar, ag, ab] = advisorRgb;
-
-  return {
-    frontBg: `linear-gradient(to bottom, rgba(${fr},${fg},${fb}, 0) 0%, rgba(${fr},${fg},${fb}, 0.08) 28%, rgba(${fr},${fg},${fb}, 0.45) 60%, rgba(${fr},${fg},${fb}, 0.88) 84%, rgba(${fr},${fg},${fb}, 1) 100%)`,
-    backBg: `linear-gradient(to bottom, rgba(${br},${bg},${bb}, 0) 0%, rgba(${br},${bg},${bb}, 0.08) 28%, rgba(${br},${bg},${bb}, 0.45) 60%, rgba(${br},${bg},${bb}, 0.88) 84%, rgba(${br},${bg},${bb}, 1) 100%)`,
-    advisorFrontBg: `linear-gradient(to bottom, rgba(${ar},${ag},${ab}, 0) 0%, rgba(${ar},${ag},${ab}, 0.15) 28%, rgba(${ar},${ag},${ab}, 0.55) 60%, rgba(${ar},${ag},${ab}, 0.92) 84%, rgba(${ar},${ag},${ab}, 1) 100%)`,
-    advisorBackBg: `linear-gradient(to bottom, rgba(${ar},${ag},${ab}, 0) 0%, rgba(${ar},${ag},${ab}, 0.18) 28%, rgba(${ar},${ag},${ab}, 0.6) 60%, rgba(${ar},${ag},${ab}, 0.95) 84%, rgba(${ar},${ag},${ab}, 1) 100%)`
-  };
-}
-
 function select(index, scrollCard = true) {
   if (index === current) return;
   clearTimeout(timer);
@@ -114,46 +88,38 @@ function select(index, scrollCard = true) {
   // 右側主視覺展示（有圖則顯示，無圖則顯示重缺預留卡）
   const visualCardHtml = p.hasCover
     ? `<div class="cover-preview-card"><img class="cover" src="${asset(p.cover)}" alt="${esc(p.title)}主視覺"></div>`
-    : `<div class="cover-preview-card" style="min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: rgba(0,0,0,0.25); color: #fff;">
-         <span style="font-size: 11px; letter-spacing: 2px; padding: 3px 10px; border: 1px solid rgba(255,255,255,0.4); border-radius: 12px;">${esc(p.category)}</span>
-         <strong style="font-size: 22px; font-family: var(--font-serif); letter-spacing: 4px;">重缺</strong>
-         <span style="font-size: 11px; opacity: 0.8;">主視覺圖片待補充</span>
-       </div>`;
+    : '';
 
-  // 計算團隊卡片與老師卡片專屬撞色調色盤
-  const palette = getTeamPalette(p.themeColor);
   const teamFrontSrc = p.teamFront || p.team;
   const teamBackSrc = p.teamBack || p.teamFront || p.team;
 
   // 組合專題作品展示區 HTML
   $('#project').innerHTML = `
-    <div class="project-banner-bar">
+    <div class="project-banner-bar${visualCardHtml ? '' : ' without-visual'}">
       <div class="project-meta-col">
         <span class="tag">${esc(p.category)}</span>
         <h2 class="project-title-main">${esc(titleInfo.main)}</h2>
         ${subTitleHtml}
         <p class="project-summary-box">${esc(p.summary)}</p>
       </div>
-      <div class="project-visual-col">
-        ${visualCardHtml}
-      </div>
+      ${visualCardHtml ? `<div class="project-visual-col">${visualCardHtml}</div>` : ''}
     </div>
-    <div class="sections">
+    <div class="sections" ${p.sections.length ? '' : 'hidden'}>
       ${p.sections.map(s => `<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></section>`).join('')}
     </div>
-    <div class="gallery">
-      ${p.gallery.map(g => `<figure><img loading="lazy" tabindex="0" role="button" src="${asset(g.src)}" alt="${esc(g.alt)}" data-caption="${esc(g.caption)}" aria-label="放大：${esc(g.alt)}">${g.caption ? `<figcaption>${esc(g.caption)}</figcaption>` : ''}</figure>`).join('')}
+    <div class="gallery" ${p.gallery.length ? '' : 'hidden'}>
+      ${p.gallery.map(g => `<figure><img loading="lazy" src="${asset(g.src)}" alt="${esc(g.alt)}" data-caption="${esc(g.caption)}">${g.caption ? `<figcaption>${esc(g.caption)}</figcaption>` : ''}</figure>`).join('')}
     </div>
     <div class="links">
       ${link(p.demoUrl, '體驗作品')}
       ${link(p.video?.url, p.video?.title || '觀看影片')}
       ${p.links.map(l => link(l.url, l.label)).join('')}
     </div>
-    ${!p.video?.url ? '<p class="empty">展示影片尚未提供；正式版未提供時可隱藏此提示。</p>' : ''}
-    <details>
+    ${!p.video?.url ? '<p class="empty">展示影片待補。</p>' : ''}
+    ${p.poster ? `<details>
       <summary>檢視專題海報</summary>
-      <img class="cover" loading="lazy" src="${asset(p.poster)}" alt="專題海報佔位圖">
-    </details>
+      <img class="cover" loading="lazy" src="${asset(p.poster)}" alt="${esc(p.title)} 專題海報">
+    </details>` : ''}
     <div class="project-team">
       <div class="team-meta-header">
         <span class="tag">THE PEOPLE</span>
@@ -163,10 +129,10 @@ function select(index, scrollCard = true) {
 
       <div class="team-stage">
         <!-- 團隊 3D 翻面畫框 -->
-        <div class="team-card-flipper" id="team-photo-flipper" role="button" tabindex="0" aria-label="點擊翻轉團隊合照" title="點擊翻面查看另一張照片">
+        ${teamFrontSrc ? `<div class="team-card-flipper" id="team-photo-flipper" role="button" tabindex="0" aria-label="點擊翻轉團隊合照" title="點擊翻面查看另一張照片">
           <div class="team-card-inner">
             <!-- 正面 -->
-            <div class="team-card-face team-card-front" style="background: ${palette.frontBg};">
+            <div class="team-card-face team-card-front">
               <div class="artistic-frame-border">
                 <span class="frame-corner tl"></span>
                 <span class="frame-corner tr"></span>
@@ -182,7 +148,7 @@ function select(index, scrollCard = true) {
               </div>
             </div>
             <!-- 背面 -->
-            <div class="team-card-face team-card-back" style="background: ${palette.backBg};">
+            <div class="team-card-face team-card-back" inert>
               <div class="artistic-frame-border">
                 <span class="frame-corner tl"></span>
                 <span class="frame-corner tr"></span>
@@ -204,11 +170,13 @@ function select(index, scrollCard = true) {
           </div>
         </div>
 
+        ` : '<p class="empty">團隊合照待補。</p>'}
+
         <!-- 指導老師獨立占位畫框 (具備相同動態與視角) -->
         <div class="team-card-flipper advisor-card-flipper ${p.advisorPhoto ? 'has-photo' : 'is-placeholder'}" role="button" tabindex="0" aria-label="指導老師：${esc(p.advisor)}" title="指導老師畫框">
           <div class="team-card-inner">
             <!-- 正面 -->
-            <div class="team-card-face advisor-card-front" style="background: ${palette.advisorFrontBg};">
+            <div class="team-card-face advisor-card-front">
               <div class="artistic-frame-border">
                 <span class="frame-corner tl"></span>
                 <span class="frame-corner tr"></span>
@@ -240,7 +208,7 @@ function select(index, scrollCard = true) {
               </div>
             </div>
             <!-- 背面 -->
-            <div class="team-card-face advisor-card-back" style="background: ${palette.advisorBackBg};">
+            <div class="team-card-face advisor-card-back" inert>
               <div class="artistic-frame-border">
                 <span class="frame-corner tl"></span>
                 <span class="frame-corner tr"></span>
@@ -270,12 +238,19 @@ function select(index, scrollCard = true) {
     <button class="next-project"><span class="next-project-bg"></span><span class="next-project-content">${index === projects.length - 1 ? '回到第一扇扉' : '繼續打開下一頁'}<span class="arrow-icon">→</span></span></button>
   `;
 
+  enableImageViewing($('#project'));
+
   // 綁定團隊卡片與老師卡片點擊翻轉事件
   $('#project').querySelectorAll('.team-card-flipper').forEach(card => {
-    const doFlip = () => card.classList.toggle('is-flipped');
+    const doFlip = () => {
+      const flipped = card.classList.toggle('is-flipped');
+      const [front, back] = card.querySelectorAll('.team-card-face');
+      front.inert = flipped;
+      back.inert = !flipped;
+    };
     card.onclick = doFlip;
     card.onkeydown = (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+      if (e.target === card && (e.key === 'Enter' || e.key === ' ')) {
         e.preventDefault();
         doFlip();
       }
@@ -291,7 +266,113 @@ function select(index, scrollCard = true) {
 
 $('#prev').onclick=()=>select((current-1+projects.length)%projects.length);$('#next').onclick=()=>select((current+1)%projects.length);
 $('#doors').addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();select((current+(e.key==='ArrowRight'?1:-1)+projects.length)%projects.length);$('#doors').children[current].focus({preventScroll:true})}});
-$('#project').addEventListener('click',e=>{if(e.target.matches('.gallery img')){const img=$('#lightbox img');img.src=e.target.src;img.alt=e.target.alt;$('#lightbox p').textContent=e.target.dataset.caption;$('#lightbox').showModal()}});$('#project').addEventListener('keydown',e=>{if(e.target.matches('.gallery img')&&['Enter',' '].includes(e.key)){e.preventDefault();e.target.click()}});$('#close-modal').onclick=()=>$('#lightbox').close();
+const lightbox = $('#lightbox');
+const lightboxView = lightbox.querySelector('.lightbox-view');
+const lightboxButton = lightbox.querySelector('.lightbox-image');
+const lightboxImage = lightboxButton.querySelector('img');
+const lightboxCaption = lightbox.querySelector('p');
+
+function enableImageViewing(scope) {
+  scope.querySelectorAll('img').forEach(img => {
+    if (img.closest('a, button, #lightbox, [aria-hidden="true"]')) return;
+    img.dataset.viewImage = '';
+    img.tabIndex = 0;
+    img.setAttribute('role', 'button');
+    const label = img.alt || img.closest('figure')?.querySelector('figcaption strong')?.textContent || '照片';
+    img.setAttribute('aria-label', `檢視${label}`);
+  });
+}
+
+function openImage(img, trigger) {
+  if (!img?.naturalWidth || lightbox.open) return;
+  lightboxImage.src = img.currentSrc || img.src;
+  lightboxImage.alt = img.alt;
+  lightboxCaption.textContent = img.dataset.caption || '';
+  lightboxCaption.hidden = !lightboxCaption.textContent;
+  lightbox.showModal();
+  lightbox.addEventListener('close', () => {
+    setImageZoom(false);
+    lightboxImage.removeAttribute('src');
+    if (trigger.isConnected) trigger.focus({preventScroll:true});
+  }, {once:true});
+}
+
+function setImageZoom(zoom, event) {
+  if (zoom && !lightboxImage.naturalWidth) return;
+  const rect = lightboxImage.getBoundingClientRect();
+  const x = event?.detail ? (event.clientX - rect.left) / rect.width : .5;
+  const y = event?.detail ? (event.clientY - rect.top) / rect.height : .5;
+  if (zoom) lightboxButton.style.setProperty('--zoom-width', `${rect.width * 2.5}px`);
+  lightbox.classList.toggle('is-zoomed', zoom);
+  lightboxButton.setAttribute('aria-pressed', String(zoom));
+  lightboxButton.setAttribute('aria-label', zoom ? '縮回完整圖片' : '放大圖片');
+  lightboxView.scrollTo({
+    left: zoom ? lightboxImage.offsetWidth * x - lightboxView.clientWidth / 2 : 0,
+    top: zoom ? lightboxImage.offsetHeight * y - lightboxView.clientHeight / 2 : 0,
+    behavior: 'instant'
+  });
+}
+
+document.addEventListener('click', event => {
+  const img = event.target.closest('img[data-view-image]');
+  if (!img) return;
+  event.stopPropagation();
+  openImage(img, img);
+}, true);
+document.addEventListener('keydown', event => {
+  if (!event.target.matches('img[data-view-image]') || !['Enter',' '].includes(event.key)) return;
+  event.preventDefault();
+  openImage(event.target, event.target);
+});
+lightboxButton.onclick = event => setImageZoom(!lightbox.classList.contains('is-zoomed'), event);
+lightbox.addEventListener('keydown', event => {
+  if (!['+','=','-'].includes(event.key) || (event.key !== '-' && lightbox.classList.contains('is-zoomed'))) return;
+  event.preventDefault();
+  setImageZoom(event.key !== '-');
+});
+lightboxView.onclick = event => { if (event.target === lightboxView) lightbox.close(); };
+$('#close-modal').onclick = () => lightbox.close();
+enableImageViewing(document.querySelector('main'));
+enableImageViewing(document.querySelector('footer'));
+
+const staffDialog = $('#staff-profile');
+
+function renderCommittee(members, duties) {
+  const roster = $('#committee');
+  roster.innerHTML = members.map((member, index) => `
+    <li class="committee-card">
+      <button class="committee-frame" type="button" data-member="${index}" aria-haspopup="dialog">
+        <span class="committee-portrait">
+          ${member.photo
+            ? `<img src="${esc(member.photo)}" alt="" width="480" height="600" loading="lazy">`
+            : '<span>照片待補</span>'}
+        </span>
+        <span class="committee-label"><strong>${esc(member.name)}</strong><span>${esc(member.role)}</span></span>
+      </button>
+    </li>
+  `).join('');
+
+  roster.onclick = event => {
+    const trigger = event.target.closest('button[data-member]');
+    if (!trigger || staffDialog.open) return;
+    const member = members[Number(trigger.dataset.member)];
+    const portrait = staffDialog.querySelector('img');
+    portrait.hidden = !member.photo;
+    if (member.photo) portrait.src = member.photo;
+    else portrait.removeAttribute('src');
+    staffDialog.classList.toggle('has-portrait', Boolean(member.photo));
+    staffDialog.querySelector('#staff-name').textContent = member.name;
+    staffDialog.querySelector('.staff-role').textContent = member.role;
+    staffDialog.querySelector('.staff-duty').textContent = duties[member.role] || '';
+    staffDialog.showModal();
+    staffDialog.addEventListener('close', () => trigger.focus({preventScroll:true}), {once:true});
+  };
+}
+
+staffDialog.addEventListener('click', event => {
+  if (event.target === staffDialog) staffDialog.close();
+});
+
 function route(){
  const hash=decodeURIComponent(location.hash||'#home');
  const index=projects.findIndex(p=>`#project-${p.id}`===hash);
@@ -342,4 +423,8 @@ route();
       }
     }
   }
-})}route();$('#load-status').hidden=true;const s=await json('content/site.json');$('#department').textContent=s.department;$('#credits').textContent=s.credits;$('#faculty').innerHTML=s.faculty.map(f=>`<figure><img loading="lazy" src="${esc(f.photo)}" alt="${esc(f.name)}照片"><figcaption><h3>${esc(f.name)}</h3><p>${esc(f.role)}</p><p>${esc(f.message)}</p></figcaption></figure>`).join('');$('#committee').innerHTML=s.committee.map(c=>`<p>${esc(c.role)}｜${esc(c.members)}</p>`).join('');$('#external').innerHTML=s.links.map(l=>link(l.url,l.label)).join('');$('#venue').innerHTML=`<h3>${esc(s.exhibition.venue)}</h3><p>${esc(s.exhibition.date)}</p><p>${esc(s.exhibition.address)}</p><p>${esc(s.exhibition.transport)}</p>${link(s.exhibition.mapUrl,'開啟地圖')}`;}catch(e){$('#load-status').textContent='資料載入失敗，請以本機伺服器開啟，並檢查 JSON 清單。';console.error(e)}})();
+})}route();$('#load-status').hidden=true;const s=await json('content/site.json');$('#department').textContent=s.department;$('#credits').textContent=s.credits;const faculty = s.faculty.filter(person => !person.name.endsWith('待確認'));
+$('#faculty-area').hidden = !faculty.length;
+$('#faculty').innerHTML = faculty.map(f => `<figure>${f.photo ? `<img loading="lazy" src="${esc(f.photo)}" alt="${esc(f.name)}照片">` : ''}<figcaption><h3>${esc(f.name)}</h3><p>${esc(f.role)}</p><p>${esc(f.message)}</p></figcaption></figure>`).join('');
+renderCommittee(s.committee, s.committeeDuties);
+$('#external').innerHTML=s.links.map(l=>link(l.url,l.label)).join('');$('#venue').innerHTML=`<h3>${esc(s.exhibition.venue)}</h3><p>${esc(s.exhibition.date)}</p><p>${esc(s.exhibition.address)}</p><p>${esc(s.exhibition.transport)}</p>${link(s.exhibition.mapUrl,'開啟地圖')}`;enableImageViewing($('#team'));}catch(e){$('#load-status').textContent='資料載入失敗，請以本機伺服器開啟，並檢查 JSON 清單。';console.error(e)}})();

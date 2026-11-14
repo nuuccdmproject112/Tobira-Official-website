@@ -1,16 +1,26 @@
 from pathlib import Path
 import json, configparser, re, hashlib
-from PIL import Image
+from io import BytesIO
+from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parent
 GROUPS = ROOT / 'prototype/content/groups'
-TPL_COVER = ROOT / 'prototype/templates/組別範本_複製後改名/第01組_留一扇門給日常_主視覺.jpg'
-TPL_DOOR = ROOT / 'prototype/templates/組別範本_複製後改名/第01組_留一扇門給日常_門卡.jpg'
+TEMPLATE_DIR = ROOT / 'prototype/templates/組別範本_複製後改名'
 
 hashes = set()
-for p in [TPL_COVER, TPL_DOOR]:
+for p in TEMPLATE_DIR.glob("*.jpg"):
     if p.exists():
         hashes.add(hashlib.md5(p.read_bytes()).hexdigest())
+        with Image.open(p) as source:
+            image = ImageOps.exif_transpose(source).convert('RGB')
+            with BytesIO() as output:
+                profile = {'icc_profile': source.info['icc_profile']} if 'icc_profile' in source.info else {}
+                image.save(output, format='WEBP', quality=88, method=4, **profile)
+                hashes.add(hashlib.md5(output.getvalue()).hexdigest())
+
+def is_placeholder(path):
+    return hashlib.md5(path.read_bytes()).hexdigest() in hashes
+
 
 def extract_dominant_color(img_path):
     try:
@@ -56,21 +66,17 @@ def scan():
             if len(found) > 1 or (required and not found):
                 raise ValueError(f'{folder.name}：{role} 需要且只能有一張')
             return found[0] if found else ''
+        def supplied_image(role):
+            name = image(role, False)
+            return name if name and not is_placeholder(folder / name) else ''
         cover = image('主視覺')
         photos = sorted(
-            (p for p in folder.iterdir() if p.suffix.lower() in {'.jpg', '.jpeg', '.png'} and re.search(r'_成果展示_\d+$', p.stem)),
+            (p for p in folder.iterdir() if p.suffix.lower() in {'.jpg', '.jpeg', '.png', '.webp'} and re.search(r'_成果展示_\d+$', p.stem)),
             key=lambda p: int(p.stem.rsplit('_', 1)[1])
         )
-        if not photos:
-            raise ValueError(f'{folder.name}：缺少成果展示照片')
-
-        # 檢驗主視覺是否為佔位圖
+        photos = [p for p in photos if not is_placeholder(p)]
         cover_path = folder / cover
-        is_missing_cover = False
-        if cover_path.exists():
-            c_hash = hashlib.md5(cover_path.read_bytes()).hexdigest()
-            if c_hash in hashes:
-                is_missing_cover = True
+        is_missing_cover = is_placeholder(cover_path)
 
         # 自動提取主視覺主色調
         dominant_color = '#3a4a58' if is_missing_cover else extract_dominant_color(cover_path)
@@ -90,11 +96,11 @@ def scan():
             advisor=value('指導老師'),
             cover=cover,
             door=image('門卡', False) or cover,
-            poster=image('海報', False) or cover,
-            team=image('團隊_A', False) or image('團隊合照', False),
-            teamFront=image('團隊_A', False) or image('團隊合照', False),
-            teamBack=image('團隊_B', False),
-            advisorPhoto=image('老師', False) or image('指導老師', False),
+            poster=supplied_image('海報'),
+            team=supplied_image('團隊_A') or supplied_image('團隊合照'),
+            teamFront=supplied_image('團隊_A') or supplied_image('團隊合照'),
+            teamBack=supplied_image('團隊_B'),
+            advisorPhoto=supplied_image('老師') or supplied_image('指導老師'),
             sections=[dict(title=k, text=v.strip()) for k, v in c['完整說明'].items()],
             gallery=[dict(src=p.name, alt=f"{value('作品名稱')} 成果展示 {i}", caption=('' if any(w in c['圖片說明'].get(p.stem.rsplit('_', 1)[1], '') for w in ['待補','待填','待確認']) else c['圖片說明'].get(p.stem.rsplit('_', 1)[1], ''))) for i, p in enumerate(photos, 1)],
             video=dict(url=value('影片網址'), title=value('影片標題')),

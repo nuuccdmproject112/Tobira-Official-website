@@ -2,14 +2,16 @@ const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const opening=document.querySelector('#opening');
 const homeScene=document.querySelector('#home');
 const replayButton=document.querySelector('.replay-opening');
+const OPENING_DURATION_MS = 7200;
 let openingTimer;
 function replayOpening(){
+ if(reducedMotion.matches)return;
  clearTimeout(openingTimer);
  homeScene.classList.remove('intro-running');
  void homeScene.offsetWidth;
  homeScene.classList.add('intro-running');
  replayButton.textContent='↺ 重新播放';
- openingTimer=setTimeout(()=>{homeScene.classList.remove('intro-running');replayButton.textContent='↺ 重播開場'},3600);
+ openingTimer=setTimeout(()=>{homeScene.classList.remove('intro-running');replayButton.textContent='↺ 重播開場'},OPENING_DURATION_MS);
 }
 replayButton.addEventListener('click',replayOpening);
 const shouldAutoPlay=opening.classList.contains('play')&&!reducedMotion.matches&&!homeScene.hidden;

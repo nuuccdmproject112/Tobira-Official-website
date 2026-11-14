@@ -1,0 +1,31 @@
+{
+  "id": "g13",
+  "groupNumber": 13,
+  "title": "遊栗－霹栗國大秘寶｜2D 手機遊戲製作",
+  "category": "2D 手機遊戲",
+  "themeColor": "#f7bec8",
+  "doorBgColor": "#f7bec8",
+  "hasCover": true,
+  "summary": "作品詳細介紹待補。",
+  "members": [
+    "范恩慈",
+    "蔡乙綸",
+    "湯凱亦"
+  ],
+  "advisor": "趙文鴻",
+  "cover": "遊栗_主視覺.webp",
+  "door": "遊栗_主視覺.webp",
+  "poster": "",
+  "team": "",
+  "teamFront": "",
+  "teamBack": "",
+  "advisorPhoto": "",
+  "sections": [],
+  "gallery": [],
+  "video": {
+    "url": "",
+    "title": ""
+  },
+  "demoUrl": "",
+  "links": []
+}

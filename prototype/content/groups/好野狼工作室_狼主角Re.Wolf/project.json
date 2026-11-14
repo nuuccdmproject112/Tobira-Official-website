@@ -3,8 +3,8 @@
   "groupNumber": 2,
   "title": "好野狼工作室《狼主角，Re.Wolf：重生之我穿越到寓言故事裡變成大野狼！》",
   "category": "數媒組",
-  "themeColor": "#98b7ab",
-  "doorBgColor": "#98b7ab",
+  "themeColor": "#98b7aa",
+  "doorBgColor": "#98b7aa",
   "hasCover": true,
   "summary": "好野狼工作室結合遊戲、盲盒與香氛打造多感官沉浸體驗，藉由翻轉經典寓言與社會議題思辨，陪伴大家探索自我、收穫心靈療癒。",
   "members": [
@@ -14,9 +14,9 @@
     "顏冠昕"
   ],
   "advisor": "李筑軒",
-  "cover": "好野狼工作室_狼主角Re.Wolf_主視覺.png",
-  "door": "好野狼工作室_狼主角Re.Wolf_門卡.jpg",
-  "poster": "好野狼工作室_狼主角Re.Wolf_海報.jpg",
+  "cover": "好野狼工作室_狼主角Re.Wolf_主視覺.webp",
+  "door": "好野狼工作室_狼主角Re.Wolf_門卡.webp",
+  "poster": "",
   "team": "好野狼工作室_狼主角Re.Wolf_團隊_A.webp",
   "teamFront": "好野狼工作室_狼主角Re.Wolf_團隊_A.webp",
   "teamBack": "好野狼工作室_狼主角Re.Wolf_團隊_B.webp",
@@ -45,27 +45,27 @@
   ],
   "gallery": [
     {
-      "src": "好野狼工作室_狼主角Re.Wolf_成果展示_01.jpg",
+      "src": "好野狼工作室_狼主角Re.Wolf_成果展示_01.webp",
       "alt": "好野狼工作室《狼主角，Re.Wolf：重生之我穿越到寓言故事裡變成大野狼！》 成果展示 1",
       "caption": "01 / 實體產品公仔——放羊的小男孩"
     },
     {
-      "src": "好野狼工作室_狼主角Re.Wolf_成果展示_02.jpg",
+      "src": "好野狼工作室_狼主角Re.Wolf_成果展示_02.webp",
       "alt": "好野狼工作室《狼主角，Re.Wolf：重生之我穿越到寓言故事裡變成大野狼！》 成果展示 2",
       "caption": "02 / 實體產品公仔——好野狼"
     },
     {
-      "src": "好野狼工作室_狼主角Re.Wolf_成果展示_03.jpg",
+      "src": "好野狼工作室_狼主角Re.Wolf_成果展示_03.webp",
       "alt": "好野狼工作室《狼主角，Re.Wolf：重生之我穿越到寓言故事裡變成大野狼！》 成果展示 3",
       "caption": "03 / 實體產品公仔——左：豬小弟；右：小紅帽"
     },
     {
-      "src": "好野狼工作室_狼主角Re.Wolf_成果展示_04.jpg",
+      "src": "好野狼工作室_狼主角Re.Wolf_成果展示_04.webp",
       "alt": "好野狼工作室《狼主角，Re.Wolf：重生之我穿越到寓言故事裡變成大野狼！》 成果展示 4",
       "caption": "04 / 實體產品香氛片"
     },
     {
-      "src": "好野狼工作室_狼主角Re.Wolf_成果展示_05.png",
+      "src": "好野狼工作室_狼主角Re.Wolf_成果展示_05.webp",
       "alt": "好野狼工作室《狼主角，Re.Wolf：重生之我穿越到寓言故事裡變成大野狼！》 成果展示 5",
       "caption": "05 / 遊戲遊玩介面"
     }

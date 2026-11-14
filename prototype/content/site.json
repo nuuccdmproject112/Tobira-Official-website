@@ -17,12 +17,99 @@
   ],
   "committee": [
     {
-      "role": "總幹事組",
-      "members": "名單待填"
+      "role": "專籌會會長",
+      "name": "林和昇",
+      "photo": "content/shared/committee/林和昇.webp"
     },
     {
-      "role": "視覺／網頁／場設／公關",
-      "members": "各工作小組名單待填"
+      "role": "專籌會副會長",
+      "name": "劉佳玲",
+      "photo": "content/shared/committee/劉佳玲.webp"
+    },
+    {
+      "role": "行政祕書",
+      "name": "王文惠",
+      "photo": "content/shared/committee/王文惠.webp"
+    },
+    {
+      "role": "主視覺組",
+      "name": "楊子瑩",
+      "photo": "content/shared/committee/楊子瑩.webp"
+    },
+    {
+      "role": "主視覺組",
+      "name": "黃信融",
+      "photo": "content/shared/committee/黃信融.webp"
+    },
+    {
+      "role": "公關組",
+      "name": "楊濬瑜",
+      "photo": "content/shared/committee/楊濬瑜.webp"
+    },
+    {
+      "role": "公關組",
+      "name": "王禹蘋",
+      "photo": "content/shared/committee/王禹蘋.webp"
+    },
+    {
+      "role": "公關組",
+      "name": "范恩慈",
+      "photo": "content/shared/committee/范恩慈.webp"
+    },
+    {
+      "role": "公關組",
+      "name": "楊楚賢",
+      "photo": "content/shared/committee/楊楚賢.webp"
+    },
+    {
+      "role": "公關組",
+      "name": "郎郁婷",
+      "photo": "content/shared/committee/郎郁婷.webp"
+    },
+    {
+      "role": "美工組",
+      "name": "蔡乙綸",
+      "photo": "content/shared/committee/蔡乙綸.webp"
+    },
+    {
+      "role": "美工組",
+      "name": "劉予晴",
+      "photo": ""
+    },
+    {
+      "role": "美工組",
+      "name": "鍾明傑",
+      "photo": "content/shared/committee/鍾明傑.webp"
+    },
+    {
+      "role": "美工組",
+      "name": "黃奕淇",
+      "photo": "content/shared/committee/黃奕淇.webp"
+    },
+    {
+      "role": "資訊組",
+      "name": "葉峻楷",
+      "photo": "content/shared/committee/葉峻楷.webp"
+    },
+    {
+      "role": "資訊組",
+      "name": "林珊如",
+      "photo": "content/shared/committee/林珊如.webp"
+    },
+    {
+      "role": "企劃組",
+      "name": "王引新",
+      "photo": "content/shared/committee/王引新.webp"
+    },
+    {
+      "role": "企劃組",
+      "name": "雷翔凱",
+      "photo": "content/shared/committee/雷翔凱.webp"
+    },
+    {
+      "role": "財務組",
+      "name": "張詠婷",
+      "photo": ""
     }
   ],
   "credits": "112 級畢業專題展《扉》｜讓世界相遇。",
@@ -35,5 +122,16 @@
       "label": "文化創意與數位行銷學系",
       "url": "https://ccdm.nuu.edu.tw/"
     }
-  ]
+  ],
+  "committeeDuties": {
+    "專籌會會長": "統籌策展籌備，協調各組進度與展務。",
+    "專籌會副會長": "協助規劃開幕流程，與公關組合作寄發邀請函；邀請名單及聯絡方式由副會長確認。",
+    "行政祕書": "協助規劃開幕流程，與公關組合作寄發邀請函；邀請名單及聯絡方式由副會長確認。",
+    "主視覺組": "負責展覽主視覺與公關品設計，建立展覽的整體視覺風格。",
+    "公關組": "規劃宣傳時程、貼文主題與社群倒數，洽談苗栗在地媒體合作，並協助公關品製作發放、邀請函寄發、開幕曝光及彩排。",
+    "美工組": "協助展場布置與展示素材製作。",
+    "資訊組": "彙整團體照與展品資訊，製作各組專題頁面並測試網站上線。",
+    "企劃組": "彙整展品清單，安排展期間輪值表。",
+    "財務組": "整理展覽預算與支出紀錄。"
+  }
 }

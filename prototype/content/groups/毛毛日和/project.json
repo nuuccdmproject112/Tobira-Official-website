@@ -3,9 +3,9 @@
   "groupNumber": 8,
   "title": "毛毛日和（ももびより）",
   "category": "文創組",
-  "themeColor": "#3a4a58",
-  "doorBgColor": "#3a4a58",
-  "hasCover": false,
+  "themeColor": "#9a9a9a",
+  "doorBgColor": "#9a9a9a",
+  "hasCover": true,
   "summary": "「毛毛日和」以狗狗「豆比」與貓咪「MOOBOO」為主角，結合日系療癒風格、寵物日常與實用飼養知識，打造溫暖有趣的社群平台。",
   "members": [
     "郎郁婷",
@@ -14,9 +14,9 @@
     "穆孜齊"
   ],
   "advisor": "李筑軒",
-  "cover": "毛毛日和_主視覺.jpg",
-  "door": "毛毛日和_門卡.jpg",
-  "poster": "毛毛日和_海報.jpg",
+  "cover": "毛毛日和_主視覺.webp",
+  "door": "毛毛日和_門卡.webp",
+  "poster": "",
   "team": "毛毛日和_團隊_A.webp",
   "teamFront": "毛毛日和_團隊_A.webp",
   "teamBack": "毛毛日和_團隊_B.webp",
@@ -45,22 +45,22 @@
   ],
   "gallery": [
     {
-      "src": "毛毛日和_成果展示_01.jpg",
+      "src": "毛毛日和_成果展示_01.webp",
       "alt": "毛毛日和（ももびより） 成果展示 1",
       "caption": ""
     },
     {
-      "src": "毛毛日和_成果展示_02.jpg",
+      "src": "毛毛日和_成果展示_02.webp",
       "alt": "毛毛日和（ももびより） 成果展示 2",
       "caption": ""
     },
     {
-      "src": "毛毛日和_成果展示_03.jpg",
+      "src": "毛毛日和_成果展示_03.webp",
       "alt": "毛毛日和（ももびより） 成果展示 3",
       "caption": ""
     },
     {
-      "src": "毛毛日和_成果展示_04.jpg",
+      "src": "毛毛日和_成果展示_04.webp",
       "alt": "毛毛日和（ももびより） 成果展示 4",
       "caption": ""
     }

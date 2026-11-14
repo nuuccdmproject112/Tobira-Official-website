@@ -3,8 +3,8 @@
   "groupNumber": 9,
   "title": "異鄉一味",
   "category": "文創組",
-  "themeColor": "#979b41",
-  "doorBgColor": "#979b41",
+  "themeColor": "#979c41",
+  "doorBgColor": "#979c41",
   "hasCover": true,
   "summary": "我們是《異鄉一味》，從「飲食」出發記錄這個陪伴我們度過大學生活的地方，將沿途看見的人、事、物，透過攝影、插畫與立體書的方式記錄下來。",
   "members": [
@@ -12,9 +12,9 @@
     "鄭威典"
   ],
   "advisor": "任文瑗",
-  "cover": "異鄉一味_主視覺.jpg",
-  "door": "異鄉一味_門卡.jpg",
-  "poster": "異鄉一味_海報.jpg",
+  "cover": "異鄉一味_主視覺.webp",
+  "door": "異鄉一味_門卡.webp",
+  "poster": "",
   "team": "異鄉一味_團隊_A.webp",
   "teamFront": "異鄉一味_團隊_A.webp",
   "teamBack": "異鄉一味_團隊_B.webp",
@@ -43,47 +43,47 @@
   ],
   "gallery": [
     {
-      "src": "異鄉一味_成果展示_01.jpg",
+      "src": "異鄉一味_成果展示_01.webp",
       "alt": "異鄉一味 成果展示 1",
       "caption": ""
     },
     {
-      "src": "異鄉一味_成果展示_02.jpg",
+      "src": "異鄉一味_成果展示_02.webp",
       "alt": "異鄉一味 成果展示 2",
       "caption": ""
     },
     {
-      "src": "異鄉一味_成果展示_03.jpg",
+      "src": "異鄉一味_成果展示_03.webp",
       "alt": "異鄉一味 成果展示 3",
       "caption": ""
     },
     {
-      "src": "異鄉一味_成果展示_04.jpg",
+      "src": "異鄉一味_成果展示_04.webp",
       "alt": "異鄉一味 成果展示 4",
       "caption": ""
     },
     {
-      "src": "異鄉一味_成果展示_05.jpg",
+      "src": "異鄉一味_成果展示_05.webp",
       "alt": "異鄉一味 成果展示 5",
       "caption": ""
     },
     {
-      "src": "異鄉一味_成果展示_06.jpg",
+      "src": "異鄉一味_成果展示_06.webp",
       "alt": "異鄉一味 成果展示 6",
       "caption": ""
     },
     {
-      "src": "異鄉一味_成果展示_07.jpg",
+      "src": "異鄉一味_成果展示_07.webp",
       "alt": "異鄉一味 成果展示 7",
       "caption": ""
     },
     {
-      "src": "異鄉一味_成果展示_08.jpg",
+      "src": "異鄉一味_成果展示_08.webp",
       "alt": "異鄉一味 成果展示 8",
       "caption": ""
     },
     {
-      "src": "異鄉一味_成果展示_09.jpg",
+      "src": "異鄉一味_成果展示_09.webp",
       "alt": "異鄉一味 成果展示 9",
       "caption": ""
     }

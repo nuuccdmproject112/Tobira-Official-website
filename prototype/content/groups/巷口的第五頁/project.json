@@ -3,8 +3,8 @@
   "groupNumber": 7,
   "title": "巷口的第五頁",
   "category": "文創組",
-  "themeColor": "#989490",
-  "doorBgColor": "#989490",
+  "themeColor": "#d2d1cf",
+  "doorBgColor": "#d2d1cf",
   "hasCover": true,
   "summary": "《巷口的第五頁》以 IP 角色設計為起點，結合苗栗在地商家、NFC 感應技術與互動式故事任務，打造一場串聯虛擬與現實的探店體驗。",
   "members": [
@@ -13,9 +13,9 @@
     "莊婕妤"
   ],
   "advisor": "任文瑗",
-  "cover": "巷口的第五頁_主視覺.jpg",
-  "door": "巷口的第五頁_門卡.jpg",
-  "poster": "巷口的第五頁_海報.jpg",
+  "cover": "巷口的第五頁_主視覺.webp",
+  "door": "巷口的第五頁_門卡.webp",
+  "poster": "",
   "team": "巷口的第五頁_團隊_A.webp",
   "teamFront": "巷口的第五頁_團隊_A.webp",
   "teamBack": "巷口的第五頁_團隊_B.webp",
@@ -44,29 +44,34 @@
   ],
   "gallery": [
     {
-      "src": "巷口的第五頁_成果展示_01.jpg",
+      "src": "巷口的第五頁_成果展示_01.webp",
       "alt": "巷口的第五頁 成果展示 1",
       "caption": ""
     },
     {
-      "src": "巷口的第五頁_成果展示_02.jpg",
+      "src": "巷口的第五頁_成果展示_02.webp",
       "alt": "巷口的第五頁 成果展示 2",
       "caption": ""
     },
     {
-      "src": "巷口的第五頁_成果展示_03.jpg",
+      "src": "巷口的第五頁_成果展示_03.webp",
       "alt": "巷口的第五頁 成果展示 3",
       "caption": ""
     },
     {
-      "src": "巷口的第五頁_成果展示_04.jpg",
+      "src": "巷口的第五頁_成果展示_04.webp",
       "alt": "巷口的第五頁 成果展示 4",
       "caption": ""
     },
     {
-      "src": "巷口的第五頁_成果展示_05.jpg",
+      "src": "巷口的第五頁_成果展示_05.webp",
       "alt": "巷口的第五頁 成果展示 5",
       "caption": ""
+    },
+    {
+      "src": "巷口的第五頁_成果展示_06.webp",
+      "alt": "巷口的第五頁 成果展示 6",
+      "caption": "巷口的第五頁 Logo"
     }
   ],
   "video": {

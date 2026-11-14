@@ -3,17 +3,17 @@
   "groupNumber": 11,
   "title": "Grip and Dive Down：以爬岩鰍為原型之仿生裝置研究初探",
   "category": "論文組",
-  "themeColor": "#597879",
-  "doorBgColor": "#597879",
+  "themeColor": "#797978",
+  "doorBgColor": "#797978",
   "hasCover": true,
   "summary": "以爬岩鰍的自然附著結構為靈感，探索仿生設計於吸附式用品的創新應用，將自然機制轉化為兼具穩定性、實用性與創新價值的產品概念。",
   "members": [
     "江偉宸"
   ],
   "advisor": "李筑軒",
-  "cover": "Grip_and_Dive_Down_主視覺.jpg",
-  "door": "Grip_and_Dive_Down_門卡.jpg",
-  "poster": "Grip_and_Dive_Down_海報.jpg",
+  "cover": "Grip_and_Dive_Down_主視覺.webp",
+  "door": "Grip_and_Dive_Down_門卡.webp",
+  "poster": "",
   "team": "Grip_and_Dive_Down_團隊_A.webp",
   "teamFront": "Grip_and_Dive_Down_團隊_A.webp",
   "teamBack": "Grip_and_Dive_Down_團隊_B.webp",
@@ -42,22 +42,22 @@
   ],
   "gallery": [
     {
-      "src": "Grip_and_Dive_Down_成果展示_01.png",
+      "src": "Grip_and_Dive_Down_成果展示_01.webp",
       "alt": "Grip and Dive Down：以爬岩鰍為原型之仿生裝置研究初探 成果展示 1",
       "caption": ""
     },
     {
-      "src": "Grip_and_Dive_Down_成果展示_02.png",
+      "src": "Grip_and_Dive_Down_成果展示_02.webp",
       "alt": "Grip and Dive Down：以爬岩鰍為原型之仿生裝置研究初探 成果展示 2",
       "caption": ""
     },
     {
-      "src": "Grip_and_Dive_Down_成果展示_03.png",
+      "src": "Grip_and_Dive_Down_成果展示_03.webp",
       "alt": "Grip and Dive Down：以爬岩鰍為原型之仿生裝置研究初探 成果展示 3",
       "caption": ""
     },
     {
-      "src": "Grip_and_Dive_Down_成果展示_04.png",
+      "src": "Grip_and_Dive_Down_成果展示_04.webp",
       "alt": "Grip and Dive Down：以爬岩鰍為原型之仿生裝置研究初探 成果展示 4",
       "caption": ""
     }

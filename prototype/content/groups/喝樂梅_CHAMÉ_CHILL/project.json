@@ -4,8 +4,8 @@
   "title": "在地風味的再現：喝樂梅品牌系列茶梅酒伴手禮之品牌包裝設計研究",
   "category": "文創組",
   "themeColor": "#3a4a58",
-  "doorBgColor": "#3a4a58",
-  "hasCover": false,
+  "doorBgColor": "#dcd3c2",
+  "hasCover": true,
   "summary": "以苗栗「喝樂梅」打造子品牌 CHAMÉ CHILL，融合淺山生態 IP、治癒系包裝與互動體驗，為 Z 世代釀造懂陪伴的微醺提案。",
   "members": [
     "林珊如",
@@ -14,9 +14,9 @@
     "黃崇斌"
   ],
   "advisor": "熊子扉",
-  "cover": "喝樂梅_CHAMÉ_CHILL_主視覺.jpg",
-  "door": "喝樂梅_CHAMÉ_CHILL_門卡.jpg",
-  "poster": "喝樂梅_CHAMÉ_CHILL_海報.jpg",
+  "cover": "喝樂梅_CHAMÉ_CHILL_主視覺.webp",
+  "door": "喝樂梅_CHAMÉ_CHILL_門卡.webp",
+  "poster": "",
   "team": "喝樂梅_CHAMÉ_CHILL_團隊_A.webp",
   "teamFront": "喝樂梅_CHAMÉ_CHILL_團隊_A.webp",
   "teamBack": "喝樂梅_CHAMÉ_CHILL_團隊_B.webp",
@@ -45,32 +45,32 @@
   ],
   "gallery": [
     {
-      "src": "喝樂梅_CHAMÉ_CHILL_成果展示_01.jpg",
+      "src": "喝樂梅_CHAMÉ_CHILL_成果展示_01.webp",
       "alt": "在地風味的再現：喝樂梅品牌系列茶梅酒伴手禮之品牌包裝設計研究 成果展示 1",
       "caption": ""
     },
     {
-      "src": "喝樂梅_CHAMÉ_CHILL_成果展示_02.jpg",
+      "src": "喝樂梅_CHAMÉ_CHILL_成果展示_02.webp",
       "alt": "在地風味的再現：喝樂梅品牌系列茶梅酒伴手禮之品牌包裝設計研究 成果展示 2",
       "caption": ""
     },
     {
-      "src": "喝樂梅_CHAMÉ_CHILL_成果展示_03.jpg",
+      "src": "喝樂梅_CHAMÉ_CHILL_成果展示_03.webp",
       "alt": "在地風味的再現：喝樂梅品牌系列茶梅酒伴手禮之品牌包裝設計研究 成果展示 3",
       "caption": ""
     },
     {
-      "src": "喝樂梅_CHAMÉ_CHILL_成果展示_04.jpg",
+      "src": "喝樂梅_CHAMÉ_CHILL_成果展示_04.webp",
       "alt": "在地風味的再現：喝樂梅品牌系列茶梅酒伴手禮之品牌包裝設計研究 成果展示 4",
       "caption": ""
     },
     {
-      "src": "喝樂梅_CHAMÉ_CHILL_成果展示_05.jpg",
+      "src": "喝樂梅_CHAMÉ_CHILL_成果展示_05.webp",
       "alt": "在地風味的再現：喝樂梅品牌系列茶梅酒伴手禮之品牌包裝設計研究 成果展示 5",
       "caption": ""
     },
     {
-      "src": "喝樂梅_CHAMÉ_CHILL_成果展示_06.jpeg",
+      "src": "喝樂梅_CHAMÉ_CHILL_成果展示_06.webp",
       "alt": "在地風味的再現：喝樂梅品牌系列茶梅酒伴手禮之品牌包裝設計研究 成果展示 6",
       "caption": ""
     }
