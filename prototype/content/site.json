@@ -9,10 +9,51 @@
   },
   "faculty": [
     {
-      "name": "指導教授待確認",
-      "role": "職稱待填",
-      "message": "策展指導心得待填",
-      "photo": "content/shared/faculty-01.jpg"
+      "name": "趙文鴻",
+      "photo": "content/shared/faculty/趙文鴻.webp",
+      "url": "https://ccdm.nuu.edu.tw/p/426-1063-40.php",
+      "linkLabel": "校方個人介紹"
+    },
+    {
+      "name": "熊子扉",
+      "photo": "content/shared/faculty/熊子扉.webp",
+      "url": "https://ccdm.nuu.edu.tw/p/426-1063-31.php",
+      "linkLabel": "文創系師資名單"
+    },
+    {
+      "name": "李筑軒",
+      "photo": "content/shared/faculty/李筑軒.webp",
+      "url": "https://ccdm.nuu.edu.tw/p/426-1063-31.php",
+      "linkLabel": "文創系師資名單"
+    },
+    {
+      "name": "李威霆",
+      "photo": "content/shared/faculty/李威霆.webp",
+      "url": "https://ccdm.nuu.edu.tw/p/426-1063-12.php",
+      "linkLabel": "校方個人介紹"
+    },
+    {
+      "name": "張陳基",
+      "photo": "content/shared/faculty/張陳基.webp",
+      "url": "https://ccdm.nuu.edu.tw/p/426-1063-31.php",
+      "linkLabel": "文創系師資名單"
+    },
+    {
+      "name": "李心主",
+      "photo": "content/shared/faculty/李心主.webp",
+      "url": "https://ccdm.nuu.edu.tw/p/426-1063-31.php",
+      "linkLabel": "文創系師資名單"
+    },
+    {
+      "name": "饒伊珊",
+      "photo": "content/shared/faculty/饒伊珊.webp",
+      "url": "https://ccdm.nuu.edu.tw/p/426-1063-48.php",
+      "linkLabel": "校方個人介紹"
+    },
+    {
+      "name": "任文瑗",
+      "url": "https://ccdm.nuu.edu.tw/p/426-1063-14.php",
+      "linkLabel": "校方個人介紹"
     }
   ],
   "committee": [

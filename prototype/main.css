@@ -506,6 +506,9 @@ nav {
 }
 
 nav a {
+  padding: 5px 6px;
+  border-radius: 5px;
+  background: #2136500d;
   text-decoration: none;
   transition: opacity 0.2s ease;
 }
@@ -1052,13 +1055,14 @@ article#project {
   margin: 30px 0 20px;
 }
 
-.links a {
+.link-button {
   display: inline-flex;
   align-items: center;
   padding: 10px 20px;
   border: 1px solid #21365040;
   border-radius: 6px;
   background: #ffffff;
+  color: #213650;
   font-size: 13px;
   font-weight: 600;
   text-decoration: none;
@@ -1066,10 +1070,27 @@ article#project {
   transition: all 0.2s ease;
 }
 
-.links a:hover {
+.link-button:hover {
   background: #213650;
   color: #ffffff;
   transform: translateY(-2px);
+}
+
+.links:empty { display: none; }
+
+footer .link-button,
+.department-intro .link-button,
+.staff-source .link-button {
+  margin: 4px 6px 4px 0;
+  background: #f6f6eb;
+  color: #213650;
+}
+
+footer .link-button:hover,
+.department-intro .link-button:hover,
+.staff-source .link-button:hover {
+  background: #f5ed65;
+  color: #213650;
 }
 
 /* 專題海報收合區 */
@@ -1089,8 +1110,11 @@ details summary {
 }
 
 details img.cover {
+  display: block;
   width: 100%;
-  margin-top: 18px;
+  max-width: 620px;
+  height: auto;
+  margin: 18px auto 0;
   border-radius: 6px;
 }
 
@@ -1362,8 +1386,13 @@ html:has(#lightbox[open], #staff-profile[open]) {
   padding: 16px !important;
 }
 
-.team-card-back {
+.team-card-back,
+.advisor-card-back {
   transform: rotateY(180deg) !important;
+}
+
+.team-card-face[inert] {
+  pointer-events: none;
 }
 
 /* 典雅藝術畫框（雙重框線、內陰影、四角金屬角花） */
@@ -1706,27 +1735,58 @@ html:has(#lightbox[open], #staff-profile[open]) {
 }
 
 #faculty {
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 132px), 1fr));
+  gap: 18px;
+  margin-bottom: clamp(42px, 7vw, 72px);
 }
 
-#faculty figure {
+#faculty .faculty-frame {
   margin: 0;
-  max-width: 240px;
+  min-width: 0;
   background: #ffffff;
   padding: 12px;
   border-radius: 4px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  transition: translate .2s ease;
 }
 
+#faculty .faculty-frame:is(:hover, :focus-visible) { translate: 0 -5px; }
+
 #faculty img {
+  display: block;
   width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  background: #1b2f48;
+}
+
+#faculty .faculty-frame strong {
+  display: block;
+  font-family: var(--font-serif);
+  margin: 12px 0 3px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.faculty-no-photo {
+  display: block;
+  aspect-ratio: 4 / 5;
+  background: #dce3ec;
+}
+
+.advisor-profile-button {
+  display: block;
+  margin: 16px auto 28px;
+  padding: 10px 16px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .visit-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
   gap: 35px;
   align-items: center;
 }
@@ -1734,6 +1794,25 @@ html:has(#lightbox[open], #staff-profile[open]) {
 .visit-grid img {
   width: 100%;
   border-radius: 6px;
+}
+
+.visit-poster {
+  width: 100%;
+  max-width: 440px;
+  margin: 0;
+  justify-self: center;
+}
+
+.visit-poster img {
+  display: block;
+  height: auto;
+  box-shadow: 0 12px 32px #21365026;
+}
+
+.visit-poster figcaption {
+  margin-top: 12px;
+  text-align: center;
+  font-size: .85rem;
 }
 
 .visit-grid p {
@@ -1984,6 +2063,36 @@ footer a {
   to { opacity: 1; transform: none; }
 }
 
+#staff-profile.faculty-profile {
+  background: #162b45;
+  color: #fff8e9;
+}
+
+.faculty-profile .staff-scene {
+  border-color: #c4a36c;
+}
+
+.faculty-profile .staff-scene::before {
+  background: #244461;
+  clip-path: polygon(0 0, 60% 0, 42% 100%, 0 100%);
+  animation: faculty-reveal .65s ease-out both;
+}
+
+.faculty-profile .staff-scene::after { border-color: #c4a36c65; }
+.faculty-profile .staff-role { background: #dcc494; color: #162b45; }
+.faculty-profile .staff-portrait { animation: faculty-portrait-in .65s .1s ease-out both; }
+.faculty-profile .staff-scene form button { color: #162b45; }
+
+@keyframes faculty-reveal {
+  from { opacity: 0; translate: -10% 0; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@keyframes faculty-portrait-in {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+
 @media (max-width: 650px) {
   #staff-profile.has-portrait .staff-scene {
     grid-template-columns: minmax(0, 1fr);
@@ -2066,6 +2175,7 @@ footer a {
   }
   .team-card-flipper,
   .advisor-card-flipper {
+    flex: none !important;
     width: 100% !important;
     max-width: 380px !important;
     min-height: 380px !important;
@@ -2087,6 +2197,11 @@ footer a {
   nav {
     gap: 14px;
     font-size: 11.5px;
+  }
+
+  .project-meta-col, .sections section, .gallery figure, .staff-info {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
   .hero {
     padding: 24px 20px 30px;
@@ -2128,6 +2243,21 @@ footer a {
   }
   .visit-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 380px) {
+  header { padding-inline: 12px; }
+  nav { gap: 10px; }
+  nav a { white-space: nowrap; }
+  .shared { padding-inline: 18px; }
+  .committee-frames { padding-inline: 7px; }
+  .committee-label strong { font-size: .95rem; }
+  .committee-label span { overflow-wrap: anywhere; }
+  .next-project .next-project-content {
+    padding-inline: 18px !important;
+    gap: 12px;
+    font-size: 17px !important;
   }
 }
 
